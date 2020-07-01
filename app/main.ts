@@ -1,5 +1,5 @@
 import Vue from 'nativescript-vue'
-import App from './components/App'
+import Home from './components/Home.vue'
 import VueDevtools from 'nativescript-vue-devtools'
 
 if(TNS_ENV !== 'production') {
@@ -13,5 +13,5 @@ Vue.config.silent = (TNS_ENV === 'production')
 
 new Vue({
   
-  render: h => h('frame', [h(App)])
+  render: h => h('frame', [h(Home)])
 }).$start()
