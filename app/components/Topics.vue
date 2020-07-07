@@ -1,42 +1,52 @@
 <template>
     <!--    <StackLayout class="custom-list-wrapper">-->
 
+    <ScrollView>
+        <StackLayout height="50%" class="custom-topic-list-wrapper" orientation="vertical">
+            <Label text="vocabularies!!" class="lab" verticalAlignment="center"/>
+            <ListView class="list-group" for="vocabulary in allVocabularies" backgroundColor="transparent"
+                      separatorColor="black">
 
-    <StackLayout class="custom-list-wrapper" orientation="vertical">
-        <Label text="vocabularies" class="lab" verticalAlignment="center"/>
-        <ListView class="list-group" for="item in allVocabularies" backgroundColor="transparent" separatorColor="transparent">
-            <StackLayout class="custom-list-wrapper" orientation="vertical">
+
                 <v-template>
-                    <Label :text="item.name" class="lab" verticalAlignment="center"/>
+                    <Label text="topic n" class="lab" verticalAlignment="center"/>
+                    <Label :text="vocabulary.english" class="lab" verticalAlignment="center"/>
                 </v-template>
-            </StackLayout>
-        </ListView>
-    </StackLayout>
+                <!--                <component v-show="sidewaysTopicScrollComponent"/>-->
 
+            </ListView>
+        </StackLayout>
+    </ScrollView>
 
 </template>
-<script lang="ts">
 
+
+<script lang="ts">
+    import SidewaysTopicScrollComponent from './SidewayTopicScrollComponent.vue';
     import {Vocabularies} from "../data/vocabularies";
 
     export default {
         name: "Topics",
         data() {
             return {
+                SidewaysTopicScrollComponent: 'sidewaysTopicScrollComponent',
                 vocabularies: Vocabularies,
                 allVocabularies: [],
                 myTitles: [
-                    {id: 1, title: "The Da Vinci Code"},
+                    {id: 1, name: "The Da Vinci Code"},
                     {id: 2, name: "Harry Potter and the Chamber of Secrets"}
                 ]
             };
         },
 
+        components: {
+            SidewaysTopicScrollComponent
+        },
         methods: {
             getVocabularies() {
                 this.vocabularies.forEach((vocabulary, index) => {
                     this.allVocabularies.push({
-                        name: vocabulary.english
+                        english: vocabulary.english
                     });
                     console.log("push");
                 });
@@ -45,14 +55,16 @@
         created() {
             this.getVocabularies();
         }
+
     }
 </script>
 
 
 <style scoped>
-    .custom-list-wrapper {
-        margin: 10;
-        padding: 5;
+    .custom-topic-list-wrapper {
+        margin: 10px;
+        padding: 5px;
+        height: 50%;
     }
 
 

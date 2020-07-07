@@ -12,22 +12,16 @@
                     colSpan="4"
             />
 
-            <Button
-                    :class="navigationButtonClasses('Topics')"
-                    text.decode="&#xf0c8;"
-                    @tap="currentComponent = 'Topics'"
-                    row="2"
-                    col="0"
-            />
+            <Button :class="navigationButtonClasses('Topics')" text.decode="&#xf0c8;"
+                    @tap="currentComponent = 'Topics'" row="2" col="0"/>
 
-
-<!--            <i class="fas fa-user-ninja"></i>-->
+            <!--            <i class="fas fa-user-ninja"></i>-->
             <Button text.decode="&#xf504; Dojo" :class="navigationButtonClasses('Dojo')"
                     @tap="currentComponent = 'Dojo' " row="2" col="1"/>
 
-
             <Button text.decode="&#xf24d;" :class="navigationButtonClasses('Collection')"
                     @tap="currentComponent = 'Collection'" row="2" col="2"/>
+
             <Button text.decode="&#xf013;" :class="navigationButtonClasses('Settings')"
                     @tap="currentComponent = 'Settings'" row="2" col="3"/>
         </GridLayout>
@@ -65,7 +59,6 @@
                 return component => ({
                     "fa": true,
                     "custom-nav-btn": true,
-                    // "purple": component === this.currentComponent,
                     "nav-button-focus": component === this.currentComponent
                 });
             }
