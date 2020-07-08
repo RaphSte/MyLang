@@ -3,14 +3,17 @@
 
     <ScrollView>
         <StackLayout height="50%" class="custom-topic-list-wrapper" orientation="vertical">
-            <Label text="vocabularies!!" class="lab" verticalAlignment="center"/>
+            <Label text="vocabularies1!!" class="lab" verticalAlignment="center"/>
             <ListView class="list-group" for="vocabulary in allVocabularies" backgroundColor="transparent"
                       separatorColor="black">
 
 
-                <v-template>
+                <v-template height="100%">
                     <Label text="topic n" class="lab" verticalAlignment="center"/>
+
+
                     <Label :text="vocabulary.english" class="lab" verticalAlignment="center"/>
+                    <SidewaysTopicScrollComponent/>
                 </v-template>
                 <!--                <component v-show="sidewaysTopicScrollComponent"/>-->
 
