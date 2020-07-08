@@ -1,26 +1,20 @@
 <template>
 
-    <ScrollView orientation="horizontal">
-        <StackLayout orientation="horizontal">
             <ListView for="topic in topics">
                 <v-template>
-                    <Label :text="btnmsg"/>
-
-                    <Label :text="btnmsg"/>
-                    <Label :text="btnmsg"/>
-                    <Label :text="btnmsg"/>
-                    <Label text="asdasdasd"/>
+                    <ScrollView orientation="horizontal">
+                        <StackLayout class="" orientation="horizontal">
+                            <Label text="1. agdfsdaqwe"/>
+                            <Label :text="btnmsg"/>
+                            <Label text="3. btnmsg"/>
+                            <Label :text="btnmsg"/>
+                            <Label text="4. asdasdasd"/>
+                        </StackLayout>
+                    </ScrollView>
                 </v-template>
             </ListView>
-            <Label text="1asdasdasd"/>
-            <Label text="2asdasdasd"/>
-            <Label text="3asdasdasd"/>
-            <Label text="4asdasdasd"/>
-            <Label text="5asdasdasd"/>
-            <Label text="6asdasdasd"/>
-            <Label text="7asdasdasd"/>
-        </StackLayout>
-    </ScrollView>
+
+
 </template>
 
 <script>
@@ -30,7 +24,7 @@
             return {
                 msg: 'tap da button!!!1!1!1',
                 btnmsg: 'tap da fing button1!',
-                topics: []
+                topics: ['lel','kek','asd','lul','lol']
             }
         },
         // props: ['topics'],
