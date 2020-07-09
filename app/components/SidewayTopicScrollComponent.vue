@@ -1,20 +1,9 @@
 <template>
-
-            <ListView for="topic in topics">
-                <v-template>
-                    <ScrollView orientation="horizontal">
-                        <StackLayout class="" orientation="horizontal">
-                            <Label text="1. agdfsdaqwe"/>
-                            <Label :text="btnmsg"/>
-                            <Label text="3. btnmsg"/>
-                            <Label :text="btnmsg"/>
-                            <Label text="4. asdasdasd"/>
-                        </StackLayout>
-                    </ScrollView>
-                </v-template>
-            </ListView>
-
-
+    <ScrollView orientation="horizontal">
+        <StackLayout class="" orientation="horizontal">
+                <Button v-for="title in myTitles" v-bind:key="title.id" :text="title.id +' - '+title.name"/>
+        </StackLayout>
+    </ScrollView>
 </template>
 
 <script>
@@ -24,7 +13,16 @@
             return {
                 msg: 'tap da button!!!1!1!1',
                 btnmsg: 'tap da fing button1!',
-                topics: ['lel','kek','asd','lul','lol']
+                myTitles: [
+                    {id: 1, name: "lel"},
+                    {id: 2, name: "kek"},
+                    {id: 3, name: "lul"},
+                    {id: 4, name: "lol"},
+                    {id: 5, name: "ftw"},
+                    {id: 6, name: "hello"},
+                    {id: 7, name: "cruel"},
+                    {id: 8, name: "world"}
+                ]
             }
         },
         // props: ['topics'],

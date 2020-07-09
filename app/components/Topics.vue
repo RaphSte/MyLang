@@ -1,34 +1,22 @@
 <template>
-    <!--    <StackLayout class="custom-list-wrapper">-->
+    <GridLayout rows="auto,*" columns="*" height="100%" class="custom-topic-list-wrapper">
+        <Label text="topic n!" row="0" class="lab"/>
 
-    <ScrollView rows="auto,*" columns="*">
-        <GridLayout rows="auto,*" columns="*" height="50%" class="custom-topic-list-wrapper">
-            <Label  row="0" text="vocabularies!" class="lab" verticalAlignment="center"/>
-            <ListView row="1" class="list-group" for="vocabulary in allVocabularies" backgroundColor="transparent" separatorColor="black">
+        <ListView row="1" class="list-group" for="vocabulary in allVocabularies" backgroundColor="transparent">
+            <v-template height="100%">
+                <ScrollView orientation="vertical">
+                    <StackLayout class="" orientation="vertical">
 
-
-
-                <v-template height="100%">
-                    <ScrollView orientation="vertical">
-                        <StackLayout class="" orientation="vertical">
-
-                        <Label text="topic n" class="lab" verticalAlignment="center"/>
-
-                    <Label :text="vocabulary.english" class="lab" verticalAlignment="center"/>
-                    <SidewaysTopicScrollComponent/>
-
-
+                        <Label text="topic n!" class="lab" verticalAlignment="center"/>
+                        <Label :text="vocabulary.english" class="lab" verticalAlignment="center"/>
+                        <SidewaysTopicScrollComponent row="0"/>
 
                     </StackLayout>
                 </ScrollView>
+            </v-template>
+        </ListView>
 
-                </v-template>
-                <!--                <component v-show="sidewaysTopicScrollComponent"/>-->
-
-            </ListView>
-        </GridLayout>
-    </ScrollView>
-
+    </GridLayout>
 </template>
 
 
