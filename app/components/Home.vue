@@ -12,18 +12,21 @@
                     colSpan="4"
             />
 
-            <Button :class="navigationButtonClasses('Topics')" text.decode="&#xf0c8;"
-                    @tap="currentComponent = 'Topics'" row="2" col="0"/>
 
-            <!--            <i class="fas fa-user-ninja"></i>-->
-            <Button text.decode="&#xf504; Dojo" :class="navigationButtonClasses('Dojo')"
-                    @tap="currentComponent = 'Dojo' " row="2" col="1"/>
+            <GridLayout class="nav-button-wrapper" columns="*,*,*,*" rows="auto" row="2" colSpan="4"
+                        orientation="horizontal">
+                <Button :class="navigationButtonClasses('Topics')" text.decode="&#xf0c8;"
+                        @tap="currentComponent = 'Topics'" row="2" col="0"/>
 
-            <Button text.decode="&#xf24d;" :class="navigationButtonClasses('Collection')"
-                    @tap="currentComponent = 'Collection'" row="2" col="2"/>
+                <Button text.decode="Dojo" :class="navigationButtonClasses('Dojo')"
+                        @tap="currentComponent = 'Dojo' " row="2" col="1"/>
 
-            <Button text.decode="&#xf013;" :class="navigationButtonClasses('Settings')"
-                    @tap="currentComponent = 'Settings'" row="2" col="3"/>
+                <Button text.decode="&#xf24d;" :class="navigationButtonClasses('Collection')"
+                        @tap="currentComponent = 'Collection'" row="2" col="2"/>
+
+                <Button text.decode="&#xf013;" :class="navigationButtonClasses('Settings')"
+                        @tap="currentComponent = 'Settings'" row="2" col="3"/>
+            </GridLayout>
         </GridLayout>
     </Page>
 </template>
@@ -107,9 +110,12 @@
         border-radius: 10;
     }
 
+    .nav-button-wrapper {
+        background-color: rgba(44, 22, 61, 0.6);
+    }
+
     Button {
         background-color: rgba(255, 0, 0, 0.0);
-        /*border-color: rgba(255, 0, 0, 0.0);*/
     }
 
 </style>

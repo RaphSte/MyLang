@@ -2,14 +2,13 @@
     <GridLayout rows="auto,*" columns="*" height="100%" class="custom-topic-list-wrapper">
         <Label text="topic n!" row="0" class="lab"/>
 
-        <ListView row="1" class="list-group" for="vocabulary in allVocabularies" backgroundColor="transparent">
+        <ListView row="1" class="list-group" for="topic in allTopics" backgroundColor="transparent">
             <v-template height="100%">
                 <ScrollView orientation="vertical">
                     <StackLayout class="" orientation="vertical">
 
-                        <Label text="topic n!" class="lab" verticalAlignment="center"/>
-                        <Label :text="vocabulary.english" class="lab" verticalAlignment="center"/>
-                        <SidewaysTopicScrollComponent row="0"/>
+                        <Label :text="topic.superTopic" class="lab" verticalAlignment="center"/>
+                        <SidewaysTopicScrollComponent v-bind:subTopics="topic.subTopics" row="0"/>
 
                     </StackLayout>
                 </ScrollView>
@@ -22,7 +21,8 @@
 
 <script lang="ts">
     import SidewaysTopicScrollComponent from './SidewayTopicScrollComponent.vue';
-    import {Vocabularies} from "../data/vocabularies";
+    import {Vocabularies} from "@/data/vocabularies";
+    import {DatabaseConnector} from '@/classes/DatabaseConnector';
 
     export default {
         name: "Topics",
@@ -31,10 +31,11 @@
                 SidewaysTopicScrollComponent: 'sidewaysTopicScrollComponent',
                 vocabularies: Vocabularies,
                 allVocabularies: [],
+                allTopics: [],
                 myTitles: [
-                    {id: 1, name: "The Da Vinci Code"},
+                    {id: 1, name: "Ther Da Vinci Code"},
                     {id: 2, name: "Harry Potter and the Chamber of Secrets"}
-                ]
+                ],
             };
         },
 
@@ -43,16 +44,26 @@
         },
         methods: {
             getVocabularies() {
+                let dataBaseConnector = new DatabaseConnector();
                 this.vocabularies.forEach((vocabulary, index) => {
                     this.allVocabularies.push({
-                        english: vocabulary.english
+                        english: vocabulary.english,
+                        german: dataBaseConnector.greet()
+
                     });
                     console.log("push");
                 });
+            },
+            setTopicArray() {
+                let databaseConnector = new DatabaseConnector();
+                this.allTopics = databaseConnector.getTopics();
             }
+
+
         },
         created() {
             this.getVocabularies();
+            this.setTopicArray();
         }
 
     }

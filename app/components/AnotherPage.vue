@@ -4,29 +4,39 @@
         <StackLayout columns="*" rows="*">
             <Label class="" text="Awesome!!!" col="0" row="0"/>
             <Label class="" :text="$props.foo" col="0" row="0"/>
+            <Label class="" :text="hits" col="0" row="0"/>
             <Button class="button" :text="btnmsg" @tap="goBack" col="0" row="0"/>
+            <Button class="button" text="save" @tap="saveNumber" col="0" row="0"/>
+            <Button class="button" text="getSaved" @tap="getNumber" col="0" row="0"/>
 
         </StackLayout>
     </Page>
 </template>
 
 <script lang="ts">
-
+    const appSettings = require("tns-core-modules/application-settings");
 
     export default {
         data() {
             return {
                 msg: 'tap da button!!!!1!1',
-                btnmsg: 'tap me'
+                btnmsg: 'tap me',
+                hits: 1
             }
         },
-
+        props: ['foo'],
         methods: {
             goBack(): void {
                 this.$navigateBack();
-            }
-        },
-        props: ['foo']
+            },
+            saveNumber(): void {
+                appSettings.setNumber("hits", this.$props["foo"]);
+            },
+            getNumber(): void {
+                this.hits = appSettings.getNumber("hits");
+            },
+        }
+
 
     };
 
