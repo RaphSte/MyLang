@@ -1,12 +1,13 @@
 <template>
     <ScrollView orientation="horizontal">
         <StackLayout class="" orientation="horizontal">
-            <Label class="card-style" v-for="topic in subTopics" v-bind:key="topic.id"
+            <Label class="card-style" :style="{'background-color':color}" v-for="topic in subTopics" v-bind:key="topic.id"
                    :text="topic.name">
             </Label>
-            <Label class="card-style" v-for="title in myTitles" v-bind:key='title.id'
-                   :text="title.id +' - '+title.name">
-            </Label>
+
+<!--            <Label class="card-style" v-for="title in myTitles" v-bind:key='title.id'-->
+<!--                   :text="title.id +' - '+title.name">-->
+<!--            </Label>-->
         </StackLayout>
     </ScrollView>
 </template>
@@ -16,7 +17,8 @@
         name: "SidewayTopicScrollComponent",
         data() {
             return {
-                msg: 'tap da button!!!1!1!1',
+                msg: 'tap da buttson!!!1!1!1',
+                colorTmp: 'blue',
                 myTitles: [
                     {id: 1, name: "lel"},
                     {id: 2, name: "kek"},
@@ -38,12 +40,13 @@
                 ],
             }
         },
-        props: ['subTopics'],
+        props: ['subTopicsProps', 'color'],
 
         methods: {},
         created() {
-            this.subTopics = this.$props['subTopics'];
-        }
+            this.subTopics = this.subTopicsProps;
+            this.colorTmp = this.color
+        },
     }
 </script>
 
@@ -53,7 +56,6 @@
         height: 220px;
         border-radius: 30px;
         opacity: 1;
-        background-color: purple;
         color: white;
         margin: 30px;
     }

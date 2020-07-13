@@ -106,8 +106,8 @@
     .purple {
         background-color: #5326BF;
         color: white;
-        font-size: 30;
-        border-radius: 10;
+        font-size: 30px;
+        border-radius: 10px;
     }
 
     .nav-button-wrapper {

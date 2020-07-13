@@ -21,7 +21,7 @@ export class DatabaseConnector {
 
         return [
             {
-                superTopic: 'Basics', supTopics: [
+                superTopic: 'Basics', subTopics: [
                     {name: "letters"},
                     {name: "more letters"},
                     {name: "numbers 0-100"},
@@ -29,7 +29,7 @@ export class DatabaseConnector {
                 ]
             },
             {
-                superTopic: 'Travelling', supTopics: [
+                superTopic: 'Travelling', subTopics: [
                     {name: "Day trip"},
                     {name: "Bargaining"},
                     {name: "Directions"},
@@ -38,7 +38,7 @@ export class DatabaseConnector {
                 ]
             },
             {
-                superTopic: 'Food & Drinks', supTopics: [
+                superTopic: 'Food & Drinks', subTopics: [
                     {name: "Food"},
                     {name: "More Food"},
                     {name: "Drinks"},
@@ -46,7 +46,7 @@ export class DatabaseConnector {
                 ]
             },
             {
-                superTopic: 'Travelling', supTopics: [
+                superTopic: 'Travelling', subTopics: [
                     {name: "Day trip"},
                     {name: "Bargaining"},
                     {name: "Directions"},
@@ -54,6 +54,42 @@ export class DatabaseConnector {
                     {name: "Airport"}
                 ]
             },
+            {
+                superTopic: 'Travelling', subTopics: [
+                    {name: "Day trip"},
+                    {name: "Bargaining"},
+                    {name: "Directions"},
+                    {name: "Transport"},
+                    {name: "Airport"}
+                ]
+            },
+            {
+                superTopic: 'Travelling', subTopics: [
+                    {name: "Day trip"},
+                    {name: "Bargaining"},
+                    {name: "Directions"},
+                    {name: "Transport"},
+                    {name: "Airport"}
+                ]
+            },
+            {
+                superTopic: 'Travelling', subTopics: [
+                    {name: "Day trip"},
+                    {name: "Bargaining"},
+                    {name: "Directions"},
+                    {name: "Transport"},
+                    {name: "Airport"}
+                ]
+            },
+            {
+                superTopic: 'Travelling', subTopics: [
+                    {name: "Day trip"},
+                    {name: "Bargaining"},
+                    {name: "Directions"},
+                    {name: "Transport"},
+                    {name: "Airport"}
+                ]
+            }
         ];
     }
 

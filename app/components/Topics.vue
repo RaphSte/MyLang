@@ -8,7 +8,8 @@
                     <StackLayout class="" orientation="vertical">
 
                         <Label :text="topic.superTopic" class="lab" verticalAlignment="center"/>
-                        <SidewaysTopicScrollComponent v-bind:subTopics="topic.subTopics" row="0"/>
+                        <SidewaysTopicScrollComponent :color="getColor($index)" v-bind:subTopicsProps="topic.subTopics"
+                                                      row="0"/>
 
                     </StackLayout>
                 </ScrollView>
@@ -32,10 +33,8 @@
                 vocabularies: Vocabularies,
                 allVocabularies: [],
                 allTopics: [],
-                myTitles: [
-                    {id: 1, name: "Ther Da Vinci Code"},
-                    {id: 2, name: "Harry Potter and the Chamber of Secrets"}
-                ],
+                cardColor: "",
+                colorArrayIndex: 0
             };
         },
 
@@ -57,6 +56,10 @@
             setTopicArray() {
                 let databaseConnector = new DatabaseConnector();
                 this.allTopics = databaseConnector.getTopics();
+            },
+            getColor(rowIndex) {
+                let colors = ['pink', 'blue', 'red', 'purple'];
+                return colors[rowIndex % colors.length];
             }
 
 
