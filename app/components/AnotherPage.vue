@@ -3,11 +3,11 @@
         <ActionBar title="AnotherPage!!!"/>
         <StackLayout columns="*" rows="*">
             <Label class="" text="Awesome!!!" col="0" row="0"/>
-            <Label class="" :text="$props.foo" col="0" row="0"/>
-            <Label class="" :text="hits" col="0" row="0"/>
+            <Label class="" :text="'Current Score' + $props.foo" col="0" row="0"/>
+            <Label class="" :text="'Highscore: ' + hits" col="0" row="0"/>
             <Button class="button" :text="btnmsg" @tap="goBack" col="0" row="0"/>
             <Button class="button" text="save" @tap="saveNumber" col="0" row="0"/>
-            <Button class="button" text="getSaved" @tap="getNumber" col="0" row="0"/>
+            <Button class="button" text="getHighscore" @tap="getNumber" col="0" row="0"/>
             <Button class="button" text="DROP IT!!" @tap="dropTable" col="0" row="0"/>
 
         </StackLayout>
@@ -40,9 +40,10 @@
             getNumber(): number {
                 let databaseConnector = new DatabaseConnector();
                 databaseConnector.selectAll().then((res: any) => {
-                    this.hits = res[0][1];
+                    this.hits = res.score;
+                    console.log(res[0][1]);
+                    console.log(this.hits);
                 });
-                // this.hits = appSettings.getNumber("hits");
                 return this.hits;
             },
             dropTable(){

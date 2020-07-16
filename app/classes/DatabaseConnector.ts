@@ -21,11 +21,9 @@ export class DatabaseConnector {
 
 
     public insert(score: any) {
-        let myScore = 420;
-        let myName = "Raffler!";
         return new Promise((resolve, reject) => {
             this.createDB().then((res: any) => {
-                res.execSQL("INSERT INTO tap_me_score (username, score) VALUES (?,?)", myName, myScore).then(id => {
+                res.execSQL("INSERT INTO tap_me_score (username, score) VALUES (?,?)", ["Raffler!", score]).then(id => {
                     console.log("INSERT RESULT: ", id);
                 }, error => {
                     console.log("INSERT FAILED: ", error);
@@ -39,17 +37,17 @@ export class DatabaseConnector {
         return new Promise((resolve, reject) => {
             this.createDB().then((res: any) => {
                 return res.all("SELECT * FROM tap_me_score").then(rows => {
-                    let result = [];
+                    let result = {};
+
+
+                    console.log("rows:: ", rows);
 
                     for (let row in rows) {
-                        result.push({
-                            "username": rows[row][1],
-                            "score": rows[row][2]
-                        });
-                        console.log("SELECT success: ", rows[row][0]);
-                        console.log("SELECT success: ", rows[row][1]);
-                        console.log("SELECT success: ", rows[row][2]);
+                        result["username"] = rows[row][1];
+                        result["score"] = rows[row][2];
                     }
+
+                    console.log("result:: ", result);
                     resolve(result);
                 }, error => {
                     console.log("SELECT ERROR: ", error);
