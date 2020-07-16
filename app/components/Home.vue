@@ -99,7 +99,7 @@
     .message {
         vertical-align: center;
         text-align: center;
-        font-size: 20px;
+        font-size: 20;
         color: white;
     }
 
