@@ -1,9 +1,11 @@
 var Sqlite = require("nativescript-sqlite");
+import {VocabularyDTO} from "./VocabularyDTO";
 
 enum ColumnName {
     english = "english",
     german = "german",
     thai = "thai",
+    romanization = "romanization",
     subTopic = "sub_topic",
     superTopic = "super_topic",
     audioKey = "audio_key",
@@ -13,6 +15,7 @@ enum ColumnName {
     repetitionHistory = "repetition_history",
     percentageCorrect = "percentage_correct",
     excludeFromLearning = "exclude_from_learning",
+    containsWords = "contains_words",
     flags = "flags",
 }
 
@@ -36,6 +39,7 @@ export class VocabularyDatabaseConnector {
                     ColumnName.english + QueryElement.text + QueryElement.comma +
                     ColumnName.german + QueryElement.text + QueryElement.comma +
                     ColumnName.thai + QueryElement.text + QueryElement.comma +
+                    ColumnName.romanization + QueryElement.text + QueryElement.comma +
                     ColumnName.subTopic + QueryElement.text + QueryElement.comma +
                     ColumnName.superTopic + QueryElement.text + QueryElement.comma +
                     ColumnName.audioKey + QueryElement.text + QueryElement.comma +
@@ -45,6 +49,7 @@ export class VocabularyDatabaseConnector {
                     ColumnName.repetitionHistory + QueryElement.text + QueryElement.comma +
                     ColumnName.percentageCorrect + QueryElement.numeric + QueryElement.comma +
                     ColumnName.excludeFromLearning + QueryElement.integer + QueryElement.comma +
+                    ColumnName.containsWords + QueryElement.blob + QueryElement.comma +
                     ColumnName.flags + QueryElement.blob + QueryElement.comma +
                     ")").then(id => {
                     resolve(db);
@@ -59,7 +64,7 @@ export class VocabularyDatabaseConnector {
     }
 
 
-    public insert(entry: any) {
+    public insert(entry: VocabularyDTO) {
 
         //sortArray
         let entryArray = [];
@@ -67,10 +72,18 @@ export class VocabularyDatabaseConnector {
             entry.english,
             entry.german,
             entry.thai,
+            entry.romanization,
             entry.subTopic,
             entry.superTopic,
             entry.audioKey,
-            //...
+            entry.imageKey,
+            entry.repetitions,
+            entry.correctRepetitions,
+            entry.repetitionHistory,
+            entry.percentageCorrect,
+            entry.excludeFromLearning,
+            entry.containsWords,
+            entry.flags,
         )
 
 
@@ -80,6 +93,7 @@ export class VocabularyDatabaseConnector {
                     ColumnName.english +
                     ColumnName.german +
                     ColumnName.thai +
+                    ColumnName.romanization +
                     ColumnName.subTopic +
                     ColumnName.superTopic +
                     ColumnName.audioKey +
@@ -89,8 +103,9 @@ export class VocabularyDatabaseConnector {
                     ColumnName.repetitionHistory +
                     ColumnName.percentageCorrect +
                     ColumnName.excludeFromLearning +
+                    ColumnName.containsWords +
                     ColumnName.flags +
-                    ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", entryArray).then(id => {
+                    ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,)", entryArray).then(id => {
                     console.log("INSERT RESULT: ", id);
                 }, error => {
                     console.log("INSERT FAILED: ", error);
@@ -103,16 +118,13 @@ export class VocabularyDatabaseConnector {
     public selectAll() {
         return new Promise((resolve, reject) => {
             this.createDB().then((res: any) => {
-                return res.all("SELECT * FROM tap_me_score").then(rows => {
+                return res.all("SELECT * FROM vocabularies").then(rows => {
                     let result = {};
 
 
                     console.log("rows:: ", rows);
 
-                    for (let row in rows) {
-                        result["username"] = rows[row][1];
-                        result["score"] = rows[row][2];
-                    }
+
 
                     console.log("result:: ", result);
                     resolve(result);

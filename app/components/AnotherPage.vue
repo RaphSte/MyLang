@@ -2,7 +2,7 @@
     <Page class="page">
         <ActionBar title="AnotherPage!!!"/>
         <StackLayout columns="*" rows="*">
-            <Label class="" text="Awesome!!!" col="0" row="0"/>
+            <Label class="" :text="msg" col="0" row="0"/>
             <Label class="" :text="'Current Score' + $props.foo" col="0" row="0"/>
             <Label class="" :text="'Highscore: ' + hits" col="0" row="0"/>
             <Button class="button" :text="btnmsg" @tap="goBack" col="0" row="0"/>
@@ -17,7 +17,7 @@
 <script lang="ts">
     const appSettings = require("tns-core-modules/application-settings");
     import {DatabaseConnector} from '@/classes/DatabaseConnector';
-
+    import {VocabularyDTO} from "../classes/VocabularyDTO";
 
     export default {
         data() {
@@ -38,6 +38,11 @@
                 appSettings.setNumber("hits", this.$props["foo"]);
             },
             getNumber(): number {
+                let vocabularyDTO = new VocabularyDTO();
+                this.btnmsg = vocabularyDTO.english;
+                vocabularyDTO.english = "actually deuthsc";
+                this.msg = vocabularyDTO.english;
+
                 let databaseConnector = new DatabaseConnector();
                 databaseConnector.selectAll().then((res: any) => {
                     this.hits = res.score;
