@@ -1,22 +1,24 @@
+import {IVocabularyDTO} from "@/classes/IVocabularyDTO";
+
 var Sqlite = require("nativescript-sqlite");
 import {VocabularyDTO} from "./VocabularyDTO";
 
 enum ColumnName {
-    english = "english",
-    german = "german",
-    thai = "thai",
-    romanization = "romanization",
-    subTopic = "sub_topic",
-    superTopic = "super_topic",
-    audioKey = "audio_key",
-    imageKey = "image_key",
-    repetitions = "repetitions",
-    correctRepetitions = "correct_Repetitions",
-    repetitionHistory = "repetition_history",
-    percentageCorrect = "percentage_correct",
-    excludeFromLearning = "exclude_from_learning",
-    containsWords = "contains_words",
-    flags = "flags",
+    english = "english ",
+    german = "german ",
+    thai = "thai ",
+    romanization = "romanization ",
+    subTopic = "sub_topic ",
+    superTopic = "super_topic ",
+    audioKey = "audio_key ",
+    imageKey = "image_key ",
+    repetitions = "repetitions ",
+    correctRepetitions = "correct_Repetitions ",
+    repetitionHistory = "repetition_history ",
+    percentageCorrect = "percentage_correct ",
+    excludeFromLearning = "exclude_from_learning ",
+    containsWords = "contains_words ",
+    flags = "flags ",
 }
 
 enum QueryElement {
@@ -50,7 +52,7 @@ export class VocabularyDatabaseConnector {
                     ColumnName.percentageCorrect + QueryElement.numeric + QueryElement.comma +
                     ColumnName.excludeFromLearning + QueryElement.integer + QueryElement.comma +
                     ColumnName.containsWords + QueryElement.blob + QueryElement.comma +
-                    ColumnName.flags + QueryElement.blob + QueryElement.comma +
+                    ColumnName.flags + QueryElement.blob +
                     ")").then(id => {
                     resolve(db);
                 }, error => {
@@ -65,7 +67,6 @@ export class VocabularyDatabaseConnector {
 
 
     public insert(entry: VocabularyDTO) {
-
         //sortArray
         let entryArray = [];
         entryArray.push(
@@ -90,22 +91,22 @@ export class VocabularyDatabaseConnector {
         return new Promise((resolve, reject) => {
             this.createDB().then((res: any) => {
                 res.execSQL("INSERT INTO vocabularies (" +
-                    ColumnName.english +
-                    ColumnName.german +
-                    ColumnName.thai +
-                    ColumnName.romanization +
-                    ColumnName.subTopic +
-                    ColumnName.superTopic +
-                    ColumnName.audioKey +
-                    ColumnName.imageKey +
-                    ColumnName.repetitions +
-                    ColumnName.correctRepetitions +
-                    ColumnName.repetitionHistory +
-                    ColumnName.percentageCorrect +
-                    ColumnName.excludeFromLearning +
-                    ColumnName.containsWords +
+                    ColumnName.english + QueryElement.comma +
+                    ColumnName.german + QueryElement.comma +
+                    ColumnName.thai + QueryElement.comma +
+                    ColumnName.romanization + QueryElement.comma +
+                    ColumnName.subTopic + QueryElement.comma +
+                    ColumnName.superTopic + QueryElement.comma +
+                    ColumnName.audioKey + QueryElement.comma +
+                    ColumnName.imageKey + QueryElement.comma +
+                    ColumnName.repetitions + QueryElement.comma +
+                    ColumnName.correctRepetitions + QueryElement.comma +
+                    ColumnName.repetitionHistory + QueryElement.comma +
+                    ColumnName.percentageCorrect + QueryElement.comma +
+                    ColumnName.excludeFromLearning + QueryElement.comma +
+                    ColumnName.containsWords + QueryElement.comma +
                     ColumnName.flags +
-                    ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,)", entryArray).then(id => {
+                    ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", entryArray).then(id => {
                     console.log("INSERT RESULT: ", id);
                 }, error => {
                     console.log("INSERT FAILED: ", error);
@@ -119,15 +120,23 @@ export class VocabularyDatabaseConnector {
         return new Promise((resolve, reject) => {
             this.createDB().then((res: any) => {
                 return res.all("SELECT * FROM vocabularies").then(rows => {
-                    let result = {};
 
+                    let vocabularyDTOArray: any = [];
 
-                    console.log("rows:: ", rows);
+                    rows.forEach((row, index) => {
+                        let vocabularyDTO = new VocabularyDTO();
+                        vocabularyDTOArray.english = rows[index][1];
+                        vocabularyDTOArray.german = rows[index][2];
+                        vocabularyDTOArray.thai = rows[index][3];
+                        vocabularyDTOArray.romanization = rows[index][4];
+                        vocabularyDTOArray.push(vocabularyDTO);
+                        // console.log("___________________________", index);
+                        // console.log(rows[index][1], " - ", rows[index][2], rows[index][3], " - ", rows[index][4]," - ", rows[index][5]);
+                        // console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+                        // console.log(" ");
+                    });
 
-
-
-                    console.log("result:: ", result);
-                    resolve(result);
+                    resolve(vocabularyDTOArray);
                 }, error => {
                     console.log("SELECT ERROR: ", error);
                     reject(error);
@@ -136,14 +145,13 @@ export class VocabularyDatabaseConnector {
         });
     }
 
-    public dropTableTapMeScore() {
-        let tap_me_score = "tap_me_score";
+    public dropVocabulariesTable() {
 
         return new Promise((resolve, reject) => {
-            return (new Sqlite("myLang.db")).then(db => {
-                db.execSQL("DROP TABLE IF EXISTS tap_me_score").then(id => {
+            return (new Sqlite("vocabularies.db")).then(db => {
+                db.execSQL("DROP TABLE IF EXISTS vocabularies").then(id => {
                     resolve(db);
-                    console.log("DROPPED TABLE!");
+                    console.log("DROPPED TABLE: ");
                 }, error => {
                     console.log("DROP TABLE: ", error);
                     reject(error);
@@ -153,7 +161,6 @@ export class VocabularyDatabaseConnector {
             })
         });
     }
-
 
     greet(): string {
         let a: 1;

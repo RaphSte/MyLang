@@ -18,21 +18,23 @@ export class VocabularyDTO {
     //     this._flags = flags;
     // }
 
-    private _english: string;
-    private _german: string;
-    private _thai: string;
-    private _romanization: string;
-    private _subTopic: string;
-    private _superTopic: string;
-    private _audioKey: string;
-    private _imageKey: string;
-    private _repetitions: number;
-    private _correctRepetitions: number;
-    private _repetitionHistory: string;
-    private _percentageCorrect: number;
-    private _excludeFromLearning: number;
-    private _containsWords: any;
-    private _flags: any;
+    //TODO! implement key
+    private key: string = "defaultKey";
+    private _english: string = "defaultString";
+    private _german: string = "defaultString";
+    private _thai: string = "defaultString";
+    private _romanization: string = "defaultString";
+    private _subTopic: string = "defaultString";
+    private _superTopic: string = "defaultString";
+    private _audioKey: string = "defaultString";
+    private _imageKey: string = "defaultString";
+    private _repetitions: number = 0;
+    private _correctRepetitions: number = 0;
+    private _repetitionHistory: string = "defaultString";
+    private _percentageCorrect: number = 0;
+    private _excludeFromLearning: number = 0;
+    private _containsWords: any = "";
+    private _flags: any = "";
 
 
     get english(): string {
