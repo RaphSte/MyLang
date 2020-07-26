@@ -58,10 +58,15 @@
                 this.allTopics = databaseConnector.getTopics();
             },
             getColor(rowIndex) {
-                let colors = ['#f00' , '#90f', '#0ff','#f0f', '#00f'];
-                return colors[rowIndex % colors.length];
-            }
+                let colors = ['#90f', '#0ff','#f0f', '#00f'];
+                let duplicatedColors = [];
 
+                colors.forEach((color) => {
+                    duplicatedColors.push(color);
+                    duplicatedColors.push(color);
+                });
+                return duplicatedColors[rowIndex % duplicatedColors.length];
+            }
 
         },
         created() {
@@ -79,6 +84,5 @@
         padding: 5px;
         height: 50%;
     }
-
 
 </style>
