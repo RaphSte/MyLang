@@ -58,7 +58,7 @@
                 this.allTopics = databaseConnector.getTopics();
             },
             getColor(rowIndex) {
-                let colors = ['pink', 'blue', 'red', 'purple'];
+                let colors = ['#f00' , '#90f', '#0ff','#f0f', '#00f'];
                 return colors[rowIndex % colors.length];
             }
 

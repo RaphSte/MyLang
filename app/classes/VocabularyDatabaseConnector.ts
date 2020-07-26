@@ -121,14 +121,14 @@ export class VocabularyDatabaseConnector {
             this.createDB().then((res: any) => {
                 return res.all("SELECT * FROM vocabularies").then(rows => {
 
-                    let vocabularyDTOArray: any = [];
+                    let vocabularyDTOArray: VocabularyDTO[] = [];
 
                     rows.forEach((row, index) => {
                         let vocabularyDTO = new VocabularyDTO();
-                        vocabularyDTOArray.english = rows[index][1];
-                        vocabularyDTOArray.german = rows[index][2];
-                        vocabularyDTOArray.thai = rows[index][3];
-                        vocabularyDTOArray.romanization = rows[index][4];
+                        vocabularyDTO.english = rows[index][1];
+                        vocabularyDTO.german = rows[index][2];
+                        vocabularyDTO.thai = rows[index][3];
+                        vocabularyDTO.romanization = rows[index][4];
                         vocabularyDTOArray.push(vocabularyDTO);
                         // console.log("___________________________", index);
                         // console.log(rows[index][1], " - ", rows[index][2], rows[index][3], " - ", rows[index][4]," - ", rows[index][5]);
