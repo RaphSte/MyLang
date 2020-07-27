@@ -4,7 +4,9 @@
             <Label text="database debugging section" col="0" row="0"/>
             <Button class="button" text="drop and refill table " row="1" @tap="sampleEntry"/>
             <Button class="button" text="select all rows. Set props for list" row="2" @tap="selectAndLog"/>
-            <VocabularyListComponent v-bind:vocabularies="vocabularies" row="4"/>
+            <Button class="button" text="select and print topics" row="3" @tap="selectTopics"/>
+            <VocabularyListComponent v-bind:vocabularies="vocabularies" row="4" v-if="state === 1"/>
+            <TopicListComponent v-bind:vocabularies="vocabularies" row="4" v-if="state === 2"/>
             <Button class="button" text="back" @tap="goBack" col="0" row="5"/>
         </GridLayout>
     </page>
@@ -15,13 +17,15 @@
     import {VocabularyDatabaseConnector} from "@/classes/VocabularyDatabaseConnector";
     import {IVocabularyDTO} from "@/classes/IVocabularyDTO";
     import {VocabularyDataProvider} from "@/classes/VocabularyDataProvider";
+    import TopicListComponent from "@/components/TopicListComponent.vue";
 
     export default {
         name: "DatabaseDebugging",
-        components: {VocabularyListComponent},
+        components: {TopicListComponent, VocabularyListComponent},
         data() {
             return {
                 vocabularies: [],
+                state: 0,
             }
         },
 
@@ -30,6 +34,7 @@
                 this.$navigateBack();
             },
             sampleEntry(): void {
+                this.state = 0;
                 this.dropTable();
 
                 let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
@@ -45,11 +50,11 @@
                 vocabularyDatabaseConnector.dropVocabulariesTable();
             },
             selectAndLog(): void {
+                this.state = 1;
                 let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
                 let vocabularyDTOs = vocabularyDatabaseConnector.selectAll().then((vocabularyDTOs: IVocabularyDTO[]) => {
 
                     this.vocabularies = vocabularyDTOs;
-
                     vocabularyDTOs.forEach((vocabularyDTO) => {
                         console.log("___________________________");
                         console.log(vocabularyDTO.english);
@@ -59,7 +64,6 @@
                         console.log("___________________________");
                     });
                 });
-                this.vocabularies = vocabularyDTOs;
             },
             viewVocabs(): void {
                 let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
@@ -70,8 +74,22 @@
                     }
                 });
             },
-            created() {
-                console.log("created!!!");
+            selectTopics(): void {
+                this.state = 2;
+                let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
+                let vocabularyDTOs = vocabularyDatabaseConnector.selectTopics().then((vocabularyDTOs: IVocabularyDTO[]) => {
+
+                    this.vocabularies = vocabularyDTOs;
+                    vocabularyDTOs.forEach((vocabularyDTO) => {
+                        console.log("___________________________");
+                        console.log(vocabularyDTO.superTopic);
+                        console.log(vocabularyDTO.subTopic);
+                        console.log("___________________________");
+                    });
+                });
+
+
+
             },
         }
 

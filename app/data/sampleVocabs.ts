@@ -85,7 +85,8 @@ export const sampleVocabs = [
         german: "Zeit brauchen",
         thai: "ใช้เวลา",
         romanization: "chai-ve-la",
-
+        subTopic: "interaction",
+        superTopic: "time",
     },
 
 
@@ -184,7 +185,8 @@ export const sampleVocabs = [
         german: "nach",
         thai: "หลังจาก",
         romanization: "lang-jaag",
-
+        subTopic: "interaction",
+        superTopic: "time",
     },
 
 
@@ -220,7 +222,8 @@ export const sampleVocabs = [
         german: "vor",
         thai: "ก่อน",
         romanization: "gorn",
-
+        subTopic: "interaction",
+        superTopic: "time",
     },
 
 
@@ -324,8 +327,8 @@ export const sampleVocabs = [
 
 
     {
-        english: "up",
-        german: "mit",
+        english: "above",
+        german: "über",
         thai: "ข้างบน",
         romanization: "khang-bon",
 
@@ -334,7 +337,7 @@ export const sampleVocabs = [
 
     {
         english: "with",
-        german: "für",
+        german: "mit",
         thai: "กับ",
         romanization: "gaap",
 
@@ -343,7 +346,7 @@ export const sampleVocabs = [
 
     {
         english: "for",
-        german: "bis",
+        german: "für",
         thai: "สำหรับ",
         romanization: "sum-hrub",
 
@@ -361,7 +364,7 @@ export const sampleVocabs = [
 
     {
         english: "until",
-        german: "ein",
+        german: "bis",
         thai: "จนกระทั่ง",
         romanization: "jon-gra-thung",
 
@@ -370,7 +373,7 @@ export const sampleVocabs = [
 
     {
         english: "than",
-        german: "sie",
+        german: "dann",
         thai: "กว่า",
         romanization: "gwar",
 
@@ -378,8 +381,8 @@ export const sampleVocabs = [
 
 
     {
-        english: "a",
-        german: "alle",
+        english: "one",
+        german: "eins",
         thai: "หนึ่ง",
         romanization: "nueng",
 
@@ -388,7 +391,7 @@ export const sampleVocabs = [
 
     {
         english: "them",
-        german: "jeder",
+        german: "sie",
         thai: "พวกเขา",
         romanization: "pouk-khao",
 
@@ -814,7 +817,8 @@ export const sampleVocabs = [
         german: "morgen",
         thai: "พรุ่งนี้",
         romanization: "phrung-nee",
-
+        subTopic: "days and times",
+        superTopic: "time",
     },
 
 
@@ -823,7 +827,8 @@ export const sampleVocabs = [
         german: "gestern",
         thai: "เมื่อวาน",
         romanization: "mua-waan",
-
+        subTopic: "days and times",
+        superTopic: "time",
     },
 
 
@@ -832,7 +837,8 @@ export const sampleVocabs = [
         german: "Norden",
         thai: "เหนือ",
         romanization: "nua",
-
+        subTopic: "directions",
+        superTopic: "travelling",
     },
 
 
@@ -841,7 +847,8 @@ export const sampleVocabs = [
         german: "Süden",
         thai: "ใต้",
         romanization: "dtai",
-
+        subTopic: "directions",
+        superTopic: "travelling",
     },
 
 
@@ -850,14 +857,16 @@ export const sampleVocabs = [
         german: "Osten",
         thai: "ตะวันออก",
         romanization: "dta-wan-ork",
-
+        subTopic: "directions",
+        superTopic: "travelling",
     },
     {
         english: "west",
         german: "Westen",
         thai: "ตะวันตก",
         romanization: "dta-wan-dok",
-
+        subTopic: "directions",
+        superTopic: "travelling",
     },
 
 

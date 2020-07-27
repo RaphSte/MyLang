@@ -87,6 +87,8 @@ export class VocabularyDatabaseConnector {
             entry.flags,
         )
 
+        console.log("entryArray: ");
+        console.log(entryArray);
 
         return new Promise((resolve, reject) => {
             this.createDB().then((res: any) => {
@@ -145,6 +147,41 @@ export class VocabularyDatabaseConnector {
         });
     }
 
+
+    public selectTopics() {
+        console.log("select topics!")
+        return new Promise((resolve, reject) => {
+            this.createDB().then((res: any) => {
+                //TODO may be optimized(distinct) by saving topics in their dedicated table - gimme some nosql lol
+                return res.all("SELECT DISTINCT " + ColumnName.subTopic+ QueryElement.comma + ColumnName.superTopic + " FROM vocabularies").then(rows => {
+
+                    let vocabularyDTOArray: VocabularyDTO[] = [];
+
+                    console.log("inside promise: ");
+                    rows.forEach((row, index) => {
+                        console.log("___________________________", index);
+                        console.log(rows[index][0], " - ",rows[index][1]);
+                        console.log(" ");
+                    });
+
+
+                    rows.forEach((row, index) => {
+                        let vocabularyDTO = new VocabularyDTO();
+                        vocabularyDTO.subTopic = rows[index][0];
+                        vocabularyDTO.superTopic = rows[index][1];
+                        vocabularyDTOArray.push(vocabularyDTO);
+                    });
+
+                    resolve(vocabularyDTOArray);
+                }, error => {
+                    console.log("SELECT TOPICS ERROR: ", error);
+                    reject(error);
+                });
+            })
+        });
+    }
+
+
     public dropVocabulariesTable() {
 
         return new Promise((resolve, reject) => {
@@ -161,6 +198,7 @@ export class VocabularyDatabaseConnector {
             })
         });
     }
+
 
     greet(): string {
         let a: 1;

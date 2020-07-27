@@ -16,6 +16,8 @@ export class VocabularyDataProvider {
             vocabularyDTO.german = vocabulary.german;
             vocabularyDTO.thai = vocabulary.thai;
             vocabularyDTO.romanization = vocabulary.romanization;
+            vocabularyDTO.subTopic = vocabulary.subTopic;
+            vocabularyDTO.superTopic = vocabulary.superTopic;
 
             sampleVocabDtoArray.push(vocabularyDTO);
         });
