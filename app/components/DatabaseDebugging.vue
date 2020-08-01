@@ -1,10 +1,11 @@
 <template>
     <page class="page" actionBarHidden="true">
-        <GridLayout columns="*" rows="auto,auto,auto,auto,*,auto" orientation="vertical">
+        <GridLayout columns="*,*" rows="auto,auto,auto,auto,*,auto" orientation="vertical">
             <Label text="database debugging section" col="0" row="0"/>
             <Button class="button" text="drop and refill table " row="1" @tap="sampleEntry"/>
             <Button class="button" text="select all rows. Set props for list" row="2" @tap="selectAndLog"/>
-            <Button class="button" text="select and print topics" row="3" @tap="selectTopics"/>
+            <Button class="button" text="select and print topics" row="3" col="0" @tap="selectTopics"/>
+            <Button class="button" text="log super & subtopics" row="3" col="1" @tap="selectSubSuperTopics"/>
             <VocabularyListComponent v-bind:vocabularies="vocabularies" row="4" v-if="state === 1"/>
             <TopicListComponent v-bind:vocabularies="vocabularies" row="4" v-if="state === 2"/>
             <Button class="button" text="back" @tap="goBack" col="0" row="5"/>
@@ -87,8 +88,19 @@
                         console.log("___________________________");
                     });
                 });
+            },
+            selectSubSuperTopics(): void {
+                let vocabularyDataProvider = new VocabularyDataProvider();
+                let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
+
+                let superTopics = vocabularyDataProvider.provideSuperTopics()
+                console.log("superTopics: ", superTopics);
 
 
+                // superTopics.forEach((superTopic) => {
+                //     let subs = vocabularyDatabaseConnector.selectSubTopicsFor(superTopic);
+                //     console.log(superTopic, subs);
+                // });
 
             },
         }

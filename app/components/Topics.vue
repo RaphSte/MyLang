@@ -24,6 +24,9 @@
     import SidewaysTopicScrollComponent from './SidewayTopicScrollComponent.vue';
     import {Vocabularies} from "@/data/vocabularies";
     import {DatabaseConnector} from '@/classes/DatabaseConnector';
+    import {VocabularyDataProvider} from "@/classes/VocabularyDataProvider";
+    import {VocabularyDatabaseConnector} from "@/classes/VocabularyDatabaseConnector";
+
 
     export default {
         name: "Topics",
@@ -54,11 +57,31 @@
                 });
             },
             setTopicArray() {
-                let databaseConnector = new DatabaseConnector();
-                this.allTopics = databaseConnector.getTopics();
+                let vocabularyDataProvider = new VocabularyDataProvider();
+                let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
+                vocabularyDatabaseConnector.selectSuperTopics().then((superTopics: string[]) => {
+
+
+                    superTopics.forEach((superTopic: string) => {
+                        console.log("superTopic!: ", superTopic);
+                        if (superTopic !== null) {
+                            let subs = vocabularyDatabaseConnector.selectSubTopicsFor(superTopic).then((subTopics: string[]) => {
+                                this.allTopics.push({
+                                    superTopics: superTopic,
+                                    subTopics: subTopics,
+                                });
+                                console.log("alltopics: ", this.allTopics);
+                            });
+                        }
+                    });
+
+                });
+
+                // let databaseConnector = new DatabaseConnector();
+                // this.allTopics = databaseConnector.getTopics();
             },
             getColor(rowIndex) {
-                let colors = ['#90f', '#0ff','#f0f', '#00f'];
+                let colors = ['#90f', '#0ff', '#f0f', '#00f'];
                 let duplicatedColors = [];
 
                 colors.forEach((color) => {
@@ -72,6 +95,8 @@
         created() {
             this.getVocabularies();
             this.setTopicArray();
+            this.$forceUpdate();
+            console.log("created");
         }
 
     }

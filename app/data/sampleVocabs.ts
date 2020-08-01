@@ -385,7 +385,141 @@ export const sampleVocabs = [
         german: "eins",
         thai: "หนึ่ง",
         romanization: "nueng",
+        subTopic: "numbers 1-10",
+        superTopic: "numbers",
 
+    },
+
+    {
+        english: "two",
+        german: "Zwei",
+        thai: "สอง",
+        romanization: "s̄xng",
+        subTopic: "numbers 1-10",
+        superTopic: "numbers",
+
+    },
+    {
+        english: "three",
+        german: "drei",
+        thai: "สาม",
+        romanization: "s̄ām",
+        subTopic: "numbers 1-10",
+        superTopic: "numbers",
+
+    },
+    {
+        english: "eight",
+        german: "acht",
+        thai: "แปด",
+        romanization: "kêā",
+        subTopic: "numbers 1-10",
+        superTopic: "numbers",
+
+    },
+    {
+        english: "nine",
+        german: "neun",
+        thai: "เก้า",
+        romanization: "kêā",
+        subTopic: "numbers 1-10",
+        superTopic: "numbers",
+    },
+    {
+        english: "ten",
+        german: "zehn",
+        thai: "สิบ",
+        romanization: "sip",
+        subTopic: "numbers 1-10",
+        superTopic: "numbers",
+    },
+    {
+        english: "eleven",
+        german: "elf",
+        thai: "สิบเอ็ด",
+        romanization: "S̄ib xĕd",
+        subTopic: "numbers 11-100",
+        superTopic: "numbers",
+    },
+    {
+        english: "twelve",
+        german: "zwölf",
+        thai: "สิบสอง",
+        romanization: "s̄ib s̄xng",
+        subTopic: "numbers 11-100",
+        superTopic: "numbers",
+    },
+    {
+        english: "thirteen",
+        german: "dreizehn",
+        thai: "สิบสาม",
+        romanization: "s̄ib s̄ām",
+        subTopic: "numbers 11-100",
+        superTopic: "numbers",
+    },
+    {
+        english: "nineteen",
+        german: "neunzehn",
+        thai: "สิบเก้า",
+        romanization: "S̄ib kêā",
+        subTopic: "numbers 11-100",
+        superTopic: "numbers",
+    },
+    {
+        english: "twenty",
+        german: "zwanzig",
+        thai: "ยี่สิบ",
+        romanization: "yī̀s̄ib",
+        subTopic: "numbers 11-100",
+        superTopic: "numbers",
+    },
+    {
+        english: "twenty one",
+        german: "einundzwanzig",
+        thai: "สิบเก้า",
+        romanization: "yī̀s̄ib xĕd",
+        subTopic: "numbers 11-100",
+        superTopic: "numbers",
+    },
+    {
+        english: "twenty two",
+        german: "zweiundzwanzig",
+        thai: "ยี่สิบสอง",
+        romanization: "yī̀s̄ib s̄xng",
+        subTopic: "numbers 11-100",
+        superTopic: "numbers",
+    },
+    {
+        english: "twenty five",
+        german: "fünfundzwanzig",
+        thai: "ยี่สิบห้า",
+        romanization: "yī̀s̄ib h̄̂ā",
+        subTopic: "numbers 11-100",
+        superTopic: "numbers",
+    },
+    {
+        english: "thirty",
+        german: "dreißig",
+        thai: "สาม​สิบ",
+        romanization: "S̄āms̄ib",
+        subTopic: "numbers 11-100",
+        superTopic: "numbers",
+    },
+    {
+        english: "thirtyone",
+        german: "einunddreißig",
+        thai: "สาม​สิบ​เอ็ด",
+        romanization: "S̄āms̄ibed",
+        subTopic: "numbers 11-100",
+        superTopic: "numbers",
+    },
+    {
+        english: "thirtytwo",
+        german: "zweiunddreißig",
+        thai: "สาม​สิบ​สอง",
+        romanization: "S̄āms̄ibsong",
+        subTopic: "numbers 11-100",
+        superTopic: "numbers",
     },
 
 
@@ -484,6 +618,8 @@ export const sampleVocabs = [
         german: "Ich",
         thai: "ฉัน",
         romanization: "chan",
+        subTopic: "pronouns",
+        superTopic: "basics",
 
     },
 
@@ -493,7 +629,8 @@ export const sampleVocabs = [
         german: "er",
         thai: "เขา",
         romanization: "khao",
-
+        subTopic: "pronouns",
+        superTopic: "basics",
     },
 
 
@@ -502,7 +639,8 @@ export const sampleVocabs = [
         german: "du",
         thai: "คุณ",
         romanization: "khun",
-
+        subTopic: "pronouns",
+        superTopic: "basics",
     },
 
 
@@ -520,7 +658,8 @@ export const sampleVocabs = [
         german: "und",
         thai: "และ",
         romanization: "lae",
-
+        subTopic: "fill words",
+        superTopic: "basics",
     },
 
 
@@ -529,7 +668,8 @@ export const sampleVocabs = [
         german: "weil",
         thai: "เพราะว่า",
         romanization: "proa-waa",
-
+        subTopic: "fill words",
+        superTopic: "basics",
     },
 
 
@@ -538,7 +678,8 @@ export const sampleVocabs = [
         german: "aber",
         thai: "แต่",
         romanization: "dtae",
-
+        subTopic: "fill words",
+        superTopic: "basics",
     },
 
 
@@ -547,7 +688,8 @@ export const sampleVocabs = [
         german: "oder",
         thai: "หรือ",
         romanization: "luu",
-
+        subTopic: "fill words",
+        superTopic: "basics",
     },
 
 
@@ -583,7 +725,8 @@ export const sampleVocabs = [
         german: "wie",
         thai: "อย่างไร",
         romanization: "yang-rai",
-
+        subTopic: "question words",
+        superTopic: "basics",
     },
 
 
@@ -592,7 +735,8 @@ export const sampleVocabs = [
         german: "wenn",
         thai: "เมื่อไหร่",
         romanization: "mua-hrai",
-
+        subTopic: "question words",
+        superTopic: "basics",
     },
 
 
@@ -601,7 +745,8 @@ export const sampleVocabs = [
         german: "wo",
         thai: "ที่ไหน",
         romanization: "tee-nai",
-
+        subTopic: "question words",
+        superTopic: "basics",
     },
 
 
@@ -610,7 +755,8 @@ export const sampleVocabs = [
         german: "warum",
         thai: "ทำไม",
         romanization: "tum-mai",
-
+        subTopic: "question words",
+        superTopic: "basics",
     },
 
 
@@ -655,6 +801,8 @@ export const sampleVocabs = [
         german: "hier",
         thai: "ที่นี่",
         romanization: "tee-nee",
+        subTopic: "location",
+        superTopic: "basics",
 
     },
 
@@ -664,7 +812,8 @@ export const sampleVocabs = [
         german: "in der Nähe von",
         thai: "ไกล้",
         romanization: "glai",
-
+        subTopic: "location",
+        superTopic: "basics",
     },
 
 
@@ -837,7 +986,7 @@ export const sampleVocabs = [
         german: "Norden",
         thai: "เหนือ",
         romanization: "nua",
-        subTopic: "directions",
+        subTopic: "more directions",
         superTopic: "travelling",
     },
 
@@ -857,7 +1006,7 @@ export const sampleVocabs = [
         german: "Osten",
         thai: "ตะวันออก",
         romanization: "dta-wan-ork",
-        subTopic: "directions",
+        subTopic: "even more directions",
         superTopic: "travelling",
     },
     {

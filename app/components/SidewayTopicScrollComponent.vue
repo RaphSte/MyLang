@@ -2,7 +2,7 @@
     <ScrollView orientation="horizontal">
         <StackLayout class="" orientation="horizontal">
             <Label class="card-style" :style="{'background-color':color}" v-for="topic in subTopics" v-bind:key="topic.id"
-                   :text="topic.name">
+                   :text="topic">
             </Label>
 
 <!--            <Label class="card-style" v-for="title in myTitles" v-bind:key='title.id'-->

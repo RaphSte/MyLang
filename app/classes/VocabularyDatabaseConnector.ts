@@ -149,18 +149,17 @@ export class VocabularyDatabaseConnector {
 
 
     public selectTopics() {
-        console.log("select topics!")
         return new Promise((resolve, reject) => {
             this.createDB().then((res: any) => {
                 //TODO may be optimized(distinct) by saving topics in their dedicated table - gimme some nosql lol
-                return res.all("SELECT DISTINCT " + ColumnName.subTopic+ QueryElement.comma + ColumnName.superTopic + " FROM vocabularies").then(rows => {
+                return res.all("SELECT DISTINCT " + ColumnName.subTopic + QueryElement.comma + ColumnName.superTopic + " FROM vocabularies").then(rows => {
 
                     let vocabularyDTOArray: VocabularyDTO[] = [];
 
                     console.log("inside promise: ");
                     rows.forEach((row, index) => {
                         console.log("___________________________", index);
-                        console.log(rows[index][0], " - ",rows[index][1]);
+                        console.log(rows[index][0], " - ", rows[index][1]);
                         console.log(" ");
                     });
 
@@ -175,6 +174,55 @@ export class VocabularyDatabaseConnector {
                     resolve(vocabularyDTOArray);
                 }, error => {
                     console.log("SELECT TOPICS ERROR: ", error);
+                    reject(error);
+                });
+            })
+        });
+    }
+
+
+    public selectSuperTopics() {
+        return new Promise((resolve, reject) => {
+            this.createDB().then((res: any) => {
+                return res.all("SELECT DISTINCT " + ColumnName.superTopic + " FROM vocabularies").then(rows => {
+                    let superTopics: string[] = [];
+
+                    rows.forEach((row, index) => {
+                        superTopics.push(rows[index][0]);
+                    });
+
+                    resolve(superTopics);
+                }, error => {
+                    console.log("SELECT SUPER TOPICS ERROR: ", error);
+                    reject(error);
+                });
+            })
+        });
+    }
+
+
+    public selectSubTopicsFor(superTopic: string) {
+        return new Promise((resolve, reject) => {
+            this.createDB().then((res: any) => {
+                //TODO may be optimized(distinct) by saving topics in their dedicated table - gimme some nosql lol
+                return res.all("SELECT DISTINCT " + ColumnName.subTopic +
+                    " FROM vocabularies WHERE " + ColumnName.superTopic + "='" + superTopic + "'").then(rows => {
+
+                    let subTopics: string[] = [];
+
+                    rows.forEach((row, index) => {
+                        console.log("___________________________", );
+                        console.log(index,": " ,rows[index][0]);
+                    });
+
+
+                    rows.forEach((row, index) => {
+                        subTopics.push(rows[index][0]);
+                    });
+
+                    resolve(subTopics);
+                }, error => {
+                    console.log("SELECT SUBTOPICS ERROR: ", error);
                     reject(error);
                 });
             })
