@@ -4,9 +4,11 @@
             <Label text="database debugging section" col="0" row="0"/>
             <Button class="button" text="drop and refill table " row="1" @tap="sampleEntry"/>
             <Button class="button" text="select all rows. Set props for list" row="2" @tap="selectAndLog"/>
+            <TextField class="inputFieldStyling" v-model="subTopicInput" hint="Enter (sup)Tpoic..." row="2" col="1"
+                       @returnPress="selectVocabsForInput"/>
             <Button class="button" text="select and print topics" row="3" col="0" @tap="selectTopics"/>
             <Button class="button" text="log super & subtopics" row="3" col="1" @tap="selectSubSuperTopics"/>
-            <VocabularyListComponent v-bind:vocabularies="vocabularies" row="4" v-if="state === 1"/>
+            <VocabularyListComponent colSpan="2" v-bind:vocabularies="vocabularies" row="4" v-if="state === 1"/>
             <TopicListComponent v-bind:vocabularies="vocabularies" row="4" v-if="state === 2"/>
             <Button class="button" text="back" @tap="goBack" col="0" row="5"/>
         </GridLayout>
@@ -27,6 +29,7 @@
             return {
                 vocabularies: [],
                 state: 0,
+                subTopicInput: '',
             }
         },
 
@@ -95,19 +98,29 @@
 
                 let superTopics = vocabularyDataProvider.provideSuperTopics()
                 console.log("superTopics: ", superTopics);
-
-
-                // superTopics.forEach((superTopic) => {
-                //     let subs = vocabularyDatabaseConnector.selectSubTopicsFor(superTopic);
-                //     console.log(superTopic, subs);
-                // });
-
             },
+            selectVocabsForInput(): void {
+                this.state = 1;
+
+                let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
+
+
+                console.log("selecting vocabs for: " + this.subTopicInput);
+                vocabularyDatabaseConnector.selectVocabulariesFor(this.subTopicInput).then((vocabularyDTOs: IVocabularyDTO[]) => {
+                    this.vocabularies = vocabularyDTOs;
+                });
+
+            }
         }
 
     }
 </script>
 
 <style scoped>
+
+    .inputFieldStyling {
+
+        color: white;
+    }
 
 </style>

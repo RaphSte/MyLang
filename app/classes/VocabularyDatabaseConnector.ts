@@ -230,6 +230,38 @@ export class VocabularyDatabaseConnector {
     }
 
 
+    public selectVocabulariesFor(subTopic: string) {
+        return new Promise((resolve, reject) => {
+            this.createDB().then((res: any) => {
+                return res.all("SELECT DISTINCT * FROM vocabularies WHERE " + ColumnName.subTopic + "='" + subTopic + "'").then(rows => {
+
+                    //TODO if empty, return string that says, 'no vocabs for $topic found'
+
+                    let vocabularyDTOArray: VocabularyDTO[] = [];
+                    rows.forEach((row, index) => {
+                        let vocabularyDTO = new VocabularyDTO();
+                        vocabularyDTO.english = rows[index][1];
+                        vocabularyDTO.german = rows[index][2];
+                        vocabularyDTO.thai = rows[index][3];
+                        vocabularyDTO.romanization = rows[index][4];
+                        vocabularyDTO.subTopic = rows[index][5];
+                        vocabularyDTO.superTopic = rows[index][6];
+                        vocabularyDTOArray.push(vocabularyDTO);
+                    });
+
+
+
+                    resolve(vocabularyDTOArray);
+                }, error => {
+                    console.log("SELECT SUBTOPICS ERROR: ", error);
+                    reject(error);
+                });
+            })
+        });
+    }
+
+
+
     public dropVocabulariesTable() {
 
         return new Promise((resolve, reject) => {

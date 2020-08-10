@@ -1,52 +1,55 @@
 <template>
     <ScrollView orientation="horizontal">
         <StackLayout class="" orientation="horizontal">
-            <Label class="card-style" :style="{'background-color':color}" v-for="topic in subTopics" v-bind:key="topic.id"
-                   :text="topic">
-            </Label>
+            <Button class="card-style" :style="{'background-color':color}" v-for="topic in subTopics"
+                    v-bind:key="topic.id"
+                    :text="topic" @tap="viewVocabsForTopic(topic.id)">
+            </Button>
 
-<!--            <Label class="card-style" v-for="title in myTitles" v-bind:key='title.id'-->
-<!--                   :text="title.id +' - '+title.name">-->
-<!--            </Label>-->
+            <!--            <Label class="card-style" v-for="title in myTitles" v-bind:key='title.id'-->
+            <!--                   :text="title.id +' - '+title.name">-->
+            <!--            </Label>-->
         </StackLayout>
     </ScrollView>
 </template>
 
-<script>
+<script lang="ts">
+    import {VocabularyDatabaseConnector} from "@/classes/VocabularyDatabaseConnector";
+    import {IVocabularyDTO} from "@/classes/IVocabularyDTO";
+
+
     export default {
         name: "SidewayTopicScrollComponent",
         data() {
-            return {
-                msg: 'tap da buttson!!!1!1!1',
-                colorTmp: 'blue',
-                myTitles: [
-                    {id: 1, name: "lel"},
-                    {id: 2, name: "kek"},
-                    {id: 3, name: "lul"},
-                    {id: 4, name: "lol"},
-                    {id: 5, name: "ftw"},
-                    {id: 6, name: "hello"},
-                    {id: 7, name: "cruel"},
-                    {id: 8, name: "world"}
-                ],
-                subTopics: [
-                    {id: 1, name: "lel"},
-                    {id: 3, name: "lul"},
-                    {id: 4, name: "lol"},
-                    {id: 5, name: "ftw"},
-                    {id: 6, name: "hello"},
-                    {id: 7, name: "cruel"},
-                    {id: 8, name: "world"}
-                ],
-            }
+            return {}
         },
         props: ['subTopicsProps', 'color'],
 
-        methods: {},
+        methods: {
+
+            viewVocabsForTopic(topicId): void {
+                let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
+
+                console.log("button pressed!");
+                console.log(topicId);
+
+                vocabularyDatabaseConnector.selectVocabulariesFor(topicId).then((vocabularyDTOs: IVocabularyDTO[]) => {
+                    vocabularyDTOs.forEach((vocabularyDTO) => {
+                        console.log("___________________________");
+                        console.log(vocabularyDTO);
+                        console.log("___________________________");
+                    });
+                });
+
+
+            },
+
+
+        },
         created() {
             this.subTopics = this.subTopicsProps;
-            this.colorTmp = this.color
-        },
+        }
+        ,
     }
 </script>
 
