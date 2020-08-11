@@ -2,8 +2,7 @@
     <ScrollView orientation="horizontal">
         <StackLayout class="" orientation="horizontal">
             <Button class="card-style" :style="{'background-color':color}" v-for="topic in subTopics"
-                    v-bind:key="topic.id"
-                    :text="topic" @tap="viewVocabsForTopic(topic.id)">
+                    v-bind:key="topic.id" :text="topic" @tap="viewVocabsForTopic(topic)">
             </Button>
 
             <!--            <Label class="card-style" v-for="title in myTitles" v-bind:key='title.id'-->
@@ -16,6 +15,7 @@
 <script lang="ts">
     import {VocabularyDatabaseConnector} from "@/classes/VocabularyDatabaseConnector";
     import {IVocabularyDTO} from "@/classes/IVocabularyDTO";
+    import Learn from "@/components/Learn.vue";
 
 
     export default {
@@ -27,20 +27,33 @@
 
         methods: {
 
-            viewVocabsForTopic(topicId): void {
+            viewVocabsForTopic(subTopic): void {
                 let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
 
                 console.log("button pressed!");
-                console.log(topicId);
+                console.log(subTopic);
 
-                vocabularyDatabaseConnector.selectVocabulariesFor(topicId).then((vocabularyDTOs: IVocabularyDTO[]) => {
-                    vocabularyDTOs.forEach((vocabularyDTO) => {
-                        console.log("___________________________");
-                        console.log(vocabularyDTO);
-                        console.log("___________________________");
-                    });
+                // vocabularyDatabaseConnector.selectVocabulariesFor(subTopic).then((vocabularyDTOs: IVocabularyDTO[]) => {
+                //     vocabularyDTOs.forEach((vocabularyDTO) => {
+                //         console.log("___________________________");
+                //         console.log(vocabularyDTO);
+                //         console.log("___________________________");
+                //     });
+                // });
+
+
+                this.$navigateTo(Learn, {
+                    transition: {
+                        name: 'scaleUp',
+                        duration: 300
+                    },
+                    transitioniOS: {},
+                    transitionAndroid: {},
+
+                    props: {
+                        subTopicProp: subTopic,
+                    }
                 });
-
 
             },
 
