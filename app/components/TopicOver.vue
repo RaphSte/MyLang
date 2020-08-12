@@ -1,15 +1,10 @@
 <template>
     <Page @loaded="initVue" class="page">
-        <GridLayout columns="*,*,*,*" rows="auto,*,auto" orientation="horizontal">
+        <GridLayout columns="*,*,*" rows="auto,*,auto" orientation="horizontal">
             <Button class="button" text="goBack" @tap="navigateBack" col="0" row="0"/>
-            <Label text="Learn!" col="1" row="0"/>
-            <Label text=":time left: XX:XX" col="4" row="0"/>
-
-            <VocabularyIntroduction colSpan="4" v-bind:vocabulary="currentVocabulary" row="1"/>
-            <!--            <VocabularyListComponent colSpan="4" v-bind:vocabularies="vocabularies" row="1"/>-->
-
+            <Label text="TopicOver.vue" col="1" row="0" colSpan="2"/>
+            <VocabularyListComponent colSpan="3" v-bind:vocabularies="vocabularies" row="1"/>
         </GridLayout>
-
     </Page>
 
 </template>
@@ -19,16 +14,14 @@
     import {VocabularyDatabaseConnector} from "@/classes/VocabularyDatabaseConnector";
     import {IVocabularyDTO} from "@/classes/IVocabularyDTO";
     import VocabularyIntroduction from "@/components/VocabularyIntroduction.vue";
-    import {VocabularyDTO} from "@/classes/VocabularyDTO";
 
     export default {
         components: {VocabularyIntroduction, VocabularyListComponent},
-        name: "Learn",
+        name: "TopicOver",
         data() {
             return {
                 vocabularies: [],
                 subTopic: "",
-                currentVocabulary: "",
             }
         },
         props: ['subTopicProp'],
@@ -42,15 +35,7 @@
                 console.log("selecting vocabs for: " + subTopic);
                 vocabularyDatabaseConnector.selectVocabulariesFor(subTopic).then((vocabularyDTOs: IVocabularyDTO[]) => {
                     this.vocabularies = vocabularyDTOs;
-                    this.setCurrentVocabulary();
                 });
-            },
-            setCurrentVocabulary() {
-                //TODO: yadaayadaa this is the place where ne next unlearned vocab needs to be provided. For now a random element from the array is provided.
-                let randomVocab: IVocabularyDTO = this.vocabularies[Math.floor(Math.random() * this.vocabularies.length)];
-                this.currentVocabulary = randomVocab;
-                console.log(randomVocab.english + " was chosen!");
-
             },
             initVue(): void {
                 this.subTopic = this.$props["subTopicProp"];
