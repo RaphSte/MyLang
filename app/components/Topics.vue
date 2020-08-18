@@ -1,15 +1,18 @@
 <template>
     <GridLayout rows="auto,*" columns="*" height="100%" class="custom-topic-list-wrapper">
-        <Label text="topic n!" row="0" class="lab"/>
+    <Label text="Some other stuff will come here soon (hopefully) " row="0" class="lab"/>
 
         <ListView row="1" class="list-group" for="topic in allTopics" backgroundColor="transparent">
             <v-template height="100%">
                 <ScrollView orientation="vertical">
-                    <StackLayout class="" orientation="vertical">
 
-                        <Label :text="topic.superTopic" class="lab" verticalAlignment="center"/>
-                        <SidewaysTopicScrollComponent :color="getColor($index)" v-bind:subTopicsProps="topic.subTopics"
-                                                      row="0"/>
+                    <StackLayout class="" orientation="vertical">
+                        <Label :text="topic.superTopic" class="lab super-topic-label"/>
+                        <SidewaysTopicScrollComponent
+                                :color="getColor($index)"
+                                v-bind:subTopicsProps="topic.subTopics"
+                                v-bind:superTopic="topic.superTopic"
+                        />
 
                     </StackLayout>
                 </ScrollView>
@@ -67,7 +70,7 @@
                         if (superTopic !== null) {
                             let subs = vocabularyDatabaseConnector.selectSubTopicsFor(superTopic).then((subTopics: string[]) => {
                                 this.allTopics.push({
-                                    superTopics: superTopic,
+                                    superTopic: superTopic,
                                     subTopics: subTopics,
                                 });
                                 console.log("alltopics: ", this.allTopics);
@@ -108,6 +111,10 @@
         margin: 10px;
         padding: 5px;
         height: 50%;
+    }
+
+    .super-topic-label {
+        vertical-align: center;
     }
 
 </style>

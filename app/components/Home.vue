@@ -106,7 +106,7 @@
     .purple {
         background-color: #5326BF;
         color: white;
-        font-size: 30px;
+        font-size: 30;
         border-radius: 10px;
     }
 
