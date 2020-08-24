@@ -13,16 +13,14 @@
                 <GridLayout columns="auto,*, auto" rows="auto">
                     <!--            TODO: calculate progress  in% on tap-->
                     <Label class="sideways-scroll-progress-button" text="progress: % done!" col="0" row="0"/>
-                    <!--            TODO: info icon-->
                     <Button
-                            text="i"
-                            class="far sideways-scroll-info-button"
+                            class="sideways-scroll-info-button fa"
                             @tap="viewTopicOverView(topic)"
                             col="2"
                             row="0">
 
                     </Button>
-
+                    <Label class="fa fa-info-circle" text.decode="&#xf05a;" col="2" row="0"/>
 
                 </GridLayout>
 
@@ -129,14 +127,17 @@
 
     .sideways-scroll-info-button {
         border-radius: 32px;
-        font-size: 16px;
-        opacity: 1.0;
+        opacity: 0.0;
         background-color: transparent;
-        color: white;
         padding: 0;
         margin: 0;
         width: 64px;
         height: 64px;
+    }
+
+    .fa-info-circle {
+        color: lightgray;
+        font-size: 16;
     }
 
     .no-padding {

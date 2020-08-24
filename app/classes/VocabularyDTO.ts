@@ -1,25 +1,8 @@
-export class VocabularyDTO {
+import {IVocabularyDTO} from "@/classes/IVocabularyDTO";
 
-    // constructor(english: string, german: string, thai: string, romanization: string, subTopic: string, superTopic: string, audioKey: string, imageKey: string, repetitions: number, correctRepetitions: number, repetitionHistory: string, percentageCorrect: number, excludeFromLearning: number, containsWords: any, flags: any) {
-    //     this._english = english;
-    //     this._german = german;
-    //     this._thai = thai;
-    //     this._romanization = romanization;
-    //     this._subTopic = subTopic;
-    //     this._superTopic = superTopic;
-    //     this._audioKey = audioKey;
-    //     this._imageKey = imageKey;
-    //     this._repetitions = repetitions;
-    //     this._correctRepetitions = correctRepetitions;
-    //     this._repetitionHistory = repetitionHistory;
-    //     this._percentageCorrect = percentageCorrect;
-    //     this._excludeFromLearning = excludeFromLearning;
-    //     this._containsWords = containsWords;
-    //     this._flags = flags;
-    // }
+export class VocabularyDTO implements IVocabularyDTO {
 
-    //TODO! implement key
-    private key: string = "defaultKey";
+    private _id: string = "defaultKey";
     private _english: string = "defaultString";
     private _german: string = "defaultString";
     private _thai: string = "defaultString";
@@ -33,9 +16,19 @@ export class VocabularyDTO {
     private _repetitionHistory: string = "defaultString";
     private _percentageCorrect: number = 0;
     private _excludeFromLearning: number = 0;
+    private _includeToLearning: number = 0;
+    //contains array with id´s of words that occur in this word bc I´m to lazy to implement a proper db-scheme lol
     private _containsWords: any = "";
     private _flags: any = "";
 
+
+    get id(): string {
+        return this._id;
+    }
+
+    set id(value: string) {
+        this._id = value;
+    }
 
     get english(): string {
         return this._english;
@@ -141,11 +134,19 @@ export class VocabularyDTO {
         this._excludeFromLearning = value;
     }
 
-    get containsWords(): string {
+    get includeToLearning(): number {
+        return this._includeToLearning;
+    }
+
+    set includeToLearning(value: number) {
+        this._includeToLearning = value;
+    }
+
+    get containsWords(): number[] {
         return this._containsWords;
     }
 
-    set containsWords(value: string) {
+    set containsWords(value: number[]) {
         this._containsWords = value;
     }
 

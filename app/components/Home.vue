@@ -18,10 +18,10 @@
                 <Button :class="navigationButtonClasses('Topics')" text.decode="&#xf0c8;"
                         @tap="currentComponent = 'Topics'" row="2" col="0"/>
 
-                <Button text.decode="Dojo" :class="navigationButtonClasses('Dojo')"
+                <Button text.decode="&#xf19d;" :class="navigationButtonClasses('Dojo')"
                         @tap="currentComponent = 'Dojo' " row="2" col="1"/>
 
-                <Button text.decode="&#xf24d;" :class="navigationButtonClasses('Collection')"
+                <Button text.decode="&#xf02d;" :class="navigationButtonClasses('Collection')"
                         @tap="currentComponent = 'Collection'" row="2" col="2"/>
 
                 <Button text.decode="&#xf013;" :class="navigationButtonClasses('Settings')"
@@ -79,27 +79,23 @@
     }
 
     .custom-nav-btn {
-        /*color: #9D95B4;*/
         color: gray;
-        font-size: 12px;
+        font-size: 14;
         border-color: transparent;
         z-index: 0;
     }
 
     .nav-button-focus {
         color: white;
-        font-size: 20px;
-        border-radius: 10px;
+        font-size: 20;
+        border-radius: 10;
     }
 
-    .button {
-        background-color: pink;
-    }
 
     .message {
         vertical-align: center;
         text-align: center;
-        font-size: 20px;
+        font-size: 20;
         color: white;
     }
 
@@ -107,7 +103,7 @@
         background-color: #5326BF;
         color: white;
         font-size: 30;
-        border-radius: 10px;
+        border-radius: 10;
     }
 
     .nav-button-wrapper {

@@ -1,6 +1,6 @@
 <template>
     <GridLayout rows="auto,*" columns="*" height="100%" class="custom-topic-list-wrapper">
-    <Label text="Some other stuff will come here soon (hopefully) " row="0" class="lab"/>
+        <Label text="Some other stuff will come here soon (hopefully) " row="0" class="lab"/>
 
         <ListView row="1" class="list-group" for="topic in allTopics" backgroundColor="transparent">
             <v-template height="100%">
@@ -73,15 +73,12 @@
                                     superTopic: superTopic,
                                     subTopics: subTopics,
                                 });
-                                console.log("alltopics: ", this.allTopics);
+                                this.$forceUpdate();
                             });
                         }
                     });
 
                 });
-
-                // let databaseConnector = new DatabaseConnector();
-                // this.allTopics = databaseConnector.getTopics();
             },
             getColor(rowIndex) {
                 let colors = ['#90f', '#0ff', '#f0f', '#00f'];
@@ -98,7 +95,6 @@
         created() {
             this.getVocabularies();
             this.setTopicArray();
-            this.$forceUpdate();
             console.log("created");
         }
 

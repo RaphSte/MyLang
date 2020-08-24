@@ -4,6 +4,7 @@ var Sqlite = require("nativescript-sqlite");
 import {VocabularyDTO} from "./VocabularyDTO";
 
 enum ColumnName {
+    id = "id",
     english = "english ",
     german = "german ",
     thai = "thai ",
@@ -17,6 +18,7 @@ enum ColumnName {
     repetitionHistory = "repetition_history ",
     percentageCorrect = "percentage_correct ",
     excludeFromLearning = "exclude_from_learning ",
+    includeToLearning = "include_to_learning ",
     containsWords = "contains_words ",
     flags = "flags ",
 }
@@ -51,6 +53,7 @@ export class VocabularyDatabaseConnector {
                     ColumnName.repetitionHistory + QueryElement.text + QueryElement.comma +
                     ColumnName.percentageCorrect + QueryElement.numeric + QueryElement.comma +
                     ColumnName.excludeFromLearning + QueryElement.integer + QueryElement.comma +
+                    ColumnName.includeToLearning + QueryElement.integer + QueryElement.comma +
                     ColumnName.containsWords + QueryElement.blob + QueryElement.comma +
                     ColumnName.flags + QueryElement.blob +
                     ")").then(id => {
@@ -66,7 +69,7 @@ export class VocabularyDatabaseConnector {
     }
 
 
-    public insert(entry: VocabularyDTO) {
+    public insert(entry: IVocabularyDTO) {
         //sortArray
         let entryArray = [];
         entryArray.push(
@@ -83,12 +86,11 @@ export class VocabularyDatabaseConnector {
             entry.repetitionHistory,
             entry.percentageCorrect,
             entry.excludeFromLearning,
+            entry.includeToLearning,
             entry.containsWords,
             entry.flags,
         )
 
-        console.log("entryArray: ");
-        console.log(entryArray);
 
         return new Promise((resolve, reject) => {
             this.createDB().then((res: any) => {
@@ -106,9 +108,10 @@ export class VocabularyDatabaseConnector {
                     ColumnName.repetitionHistory + QueryElement.comma +
                     ColumnName.percentageCorrect + QueryElement.comma +
                     ColumnName.excludeFromLearning + QueryElement.comma +
+                    ColumnName.includeToLearning + QueryElement.comma +
                     ColumnName.containsWords + QueryElement.comma +
                     ColumnName.flags +
-                    ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", entryArray).then(id => {
+                    ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", entryArray).then(id => {
                     console.log("INSERT RESULT: ", id);
                 }, error => {
                     console.log("INSERT FAILED: ", error);
@@ -122,22 +125,11 @@ export class VocabularyDatabaseConnector {
         return new Promise((resolve, reject) => {
             this.createDB().then((res: any) => {
                 return res.all("SELECT * FROM vocabularies").then(rows => {
-
-                    let vocabularyDTOArray: VocabularyDTO[] = [];
-
-                    rows.forEach((row, index) => {
-                        let vocabularyDTO = new VocabularyDTO();
-                        vocabularyDTO.english = rows[index][1];
-                        vocabularyDTO.german = rows[index][2];
-                        vocabularyDTO.thai = rows[index][3];
-                        vocabularyDTO.romanization = rows[index][4];
+                    let vocabularyDTOArray: IVocabularyDTO[] = [];
+                    rows.forEach((row) => {
+                        let vocabularyDTO: IVocabularyDTO = this.createVocabularyDTO(row)
                         vocabularyDTOArray.push(vocabularyDTO);
-                        // console.log("___________________________", index);
-                        // console.log(rows[index][1], " - ", rows[index][2], rows[index][3], " - ", rows[index][4]," - ", rows[index][5]);
-                        // console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-                        // console.log(" ");
                     });
-
                     resolve(vocabularyDTOArray);
                 }, error => {
                     console.log("SELECT ERROR: ", error);
@@ -153,24 +145,11 @@ export class VocabularyDatabaseConnector {
             this.createDB().then((res: any) => {
                 //TODO may be optimized(distinct) by saving topics in their dedicated table - gimme some nosql lol
                 return res.all("SELECT DISTINCT " + ColumnName.subTopic + QueryElement.comma + ColumnName.superTopic + " FROM vocabularies").then(rows => {
-
-                    let vocabularyDTOArray: VocabularyDTO[] = [];
-
-                    console.log("inside promise: ");
-                    rows.forEach((row, index) => {
-                        console.log("___________________________", index);
-                        console.log(rows[index][0], " - ", rows[index][1]);
-                        console.log(" ");
-                    });
-
-
-                    rows.forEach((row, index) => {
-                        let vocabularyDTO = new VocabularyDTO();
-                        vocabularyDTO.subTopic = rows[index][0];
-                        vocabularyDTO.superTopic = rows[index][1];
+                    let vocabularyDTOArray: IVocabularyDTO[] = [];
+                    rows.forEach((row) => {
+                        let vocabularyDTO: IVocabularyDTO = this.createVocabularyDTO(row);
                         vocabularyDTOArray.push(vocabularyDTO);
                     });
-
                     resolve(vocabularyDTOArray);
                 }, error => {
                     console.log("SELECT TOPICS ERROR: ", error);
@@ -190,7 +169,6 @@ export class VocabularyDatabaseConnector {
                     rows.forEach((row, index) => {
                         superTopics.push(rows[index][0]);
                     });
-
                     resolve(superTopics);
                 }, error => {
                     console.log("SELECT SUPER TOPICS ERROR: ", error);
@@ -207,19 +185,10 @@ export class VocabularyDatabaseConnector {
                 //TODO may be optimized(distinct) by saving topics in their dedicated table - gimme some nosql lol
                 return res.all("SELECT DISTINCT " + ColumnName.subTopic +
                     " FROM vocabularies WHERE " + ColumnName.superTopic + "='" + superTopic + "'").then(rows => {
-
                     let subTopics: string[] = [];
-
-                    rows.forEach((row, index) => {
-                        console.log("___________________________", );
-                        console.log(index,": " ,rows[index][0]);
-                    });
-
-
                     rows.forEach((row, index) => {
                         subTopics.push(rows[index][0]);
                     });
-
                     resolve(subTopics);
                 }, error => {
                     console.log("SELECT SUBTOPICS ERROR: ", error);
@@ -234,23 +203,12 @@ export class VocabularyDatabaseConnector {
         return new Promise((resolve, reject) => {
             this.createDB().then((res: any) => {
                 return res.all("SELECT DISTINCT * FROM vocabularies WHERE " + ColumnName.subTopic + "='" + subTopic + "'").then(rows => {
-
                     //TODO if empty, return string that says, 'no vocabs for $topic found'
-
-                    let vocabularyDTOArray: VocabularyDTO[] = [];
-                    rows.forEach((row, index) => {
-                        let vocabularyDTO = new VocabularyDTO();
-                        vocabularyDTO.english = rows[index][1];
-                        vocabularyDTO.german = rows[index][2];
-                        vocabularyDTO.thai = rows[index][3];
-                        vocabularyDTO.romanization = rows[index][4];
-                        vocabularyDTO.subTopic = rows[index][5];
-                        vocabularyDTO.superTopic = rows[index][6];
+                    let vocabularyDTOArray: IVocabularyDTO[] = [];
+                    rows.forEach((row) => {
+                        let vocabularyDTO: IVocabularyDTO = this.createVocabularyDTO(row)
                         vocabularyDTOArray.push(vocabularyDTO);
                     });
-
-
-
                     resolve(vocabularyDTOArray);
                 }, error => {
                     console.log("SELECT SUBTOPICS ERROR: ", error);
@@ -260,10 +218,60 @@ export class VocabularyDatabaseConnector {
         });
     }
 
+    public selectVocabularyById(id: number) {
+        return new Promise((resolve, reject) => {
+            this.createDB().then((res: any) => {
+                return res.all("SELECT * FROM vocabularies WHERE " + ColumnName.id + this.wrapQueryNumber(id)).then(rows => {
+                    let vocabularyDTOArray: IVocabularyDTO[] = [];
+                    rows.forEach((row) => {
+                        let vocabularyDTO: IVocabularyDTO = this.createVocabularyDTO(row);
+                        vocabularyDTOArray.push(vocabularyDTO);
+                    });
+                    resolve(vocabularyDTOArray);
+                }, error => {
+                    console.log("SELECT VOCABULARY BY ID ERROR: ", error);
+                    reject(error);
+                });
+            })
+        });
+    }
+
+    public updateVocabulary(vocabularyDTO: IVocabularyDTO) {
+        return new Promise((resolve, reject) => {
+            return (new Sqlite("vocabularies.db")).then(db => {
+                db.execSQL("UPDATE vocabularies SET " +
+                    ColumnName.english + this.wrapQueryString(vocabularyDTO.english) + QueryElement.comma +
+                    ColumnName.german + this.wrapQueryString(vocabularyDTO.german) + QueryElement.comma +
+                    ColumnName.thai + this.wrapQueryString(vocabularyDTO.thai) + QueryElement.comma +
+                    ColumnName.romanization + this.wrapQueryString(vocabularyDTO.romanization) + QueryElement.comma +
+                    ColumnName.subTopic + this.wrapQueryString(vocabularyDTO.subTopic) + QueryElement.comma +
+                    ColumnName.superTopic + this.wrapQueryString(vocabularyDTO.superTopic) + QueryElement.comma +
+                    ColumnName.audioKey + this.wrapQueryString(vocabularyDTO.audioKey) + QueryElement.comma +
+                    ColumnName.imageKey + this.wrapQueryString(vocabularyDTO.imageKey) + QueryElement.comma +
+                    ColumnName.repetitions + this.wrapQueryNumber(vocabularyDTO.repetitions) + QueryElement.comma +
+                    ColumnName.correctRepetitions + this.wrapQueryNumber(vocabularyDTO.correctRepetitions) + QueryElement.comma +
+                    ColumnName.repetitionHistory + this.wrapQueryString(vocabularyDTO.imageKey) + QueryElement.comma +
+                    ColumnName.percentageCorrect + this.wrapQueryNumber(vocabularyDTO.percentageCorrect) + QueryElement.comma +
+                    ColumnName.excludeFromLearning + this.wrapQueryNumber(vocabularyDTO.excludeFromLearning) + QueryElement.comma +
+                    ColumnName.includeToLearning + this.wrapQueryNumber(vocabularyDTO.includeToLearning) + QueryElement.comma +
+                    ColumnName.containsWords + this.wrapQueryString(vocabularyDTO.containsWords.toString()) + QueryElement.comma +
+                    ColumnName.flags + this.wrapQueryString(vocabularyDTO.flags.toString()) +
+                    "WHERE " + ColumnName.id + "='" + vocabularyDTO.id + "'").then(id => {
+
+                    resolve(db);
+                    console.log("UPDATE VOCABULARY SUCCESS: ");
+                }, error => {
+                    console.log("UPDATE VOCABULARY ERROR: ", error);
+                    reject(error);
+                });
+            }, error => {
+                reject(error);
+            })
+        });
+    }
 
 
     public dropVocabulariesTable() {
-
         return new Promise((resolve, reject) => {
             return (new Sqlite("vocabularies.db")).then(db => {
                 db.execSQL("DROP TABLE IF EXISTS vocabularies").then(id => {
@@ -279,6 +287,36 @@ export class VocabularyDatabaseConnector {
         });
     }
 
+
+    private createVocabularyDTO(contents: any[]): IVocabularyDTO {
+        let vocabularyDTO: IVocabularyDTO = new VocabularyDTO();
+        vocabularyDTO.id = contents[0];
+        vocabularyDTO.english = contents[1];
+        vocabularyDTO.german = contents[2];
+        vocabularyDTO.thai = contents[3];
+        vocabularyDTO.romanization = contents[4];
+        vocabularyDTO.subTopic = contents[5];
+        vocabularyDTO.superTopic = contents[6]
+        vocabularyDTO.audioKey = contents[7]
+        vocabularyDTO.imageKey = contents[8];
+        vocabularyDTO.repetitions = contents[9];
+        vocabularyDTO.correctRepetitions = contents[10];
+        vocabularyDTO.repetitionHistory = contents[11];
+        vocabularyDTO.percentageCorrect = contents[12];
+        vocabularyDTO.excludeFromLearning = contents[13];
+        vocabularyDTO.includeToLearning = contents[14];
+        vocabularyDTO.containsWords = contents[15];
+        vocabularyDTO.flags = contents[16];
+        return vocabularyDTO;
+    }
+
+    private wrapQueryString(queryString: string) {
+        return "='" + queryString + "'";
+    }
+
+    private wrapQueryNumber(queryNumber: number) {
+        return "="+queryNumber;
+    }
 
     greet(): string {
         let a: 1;

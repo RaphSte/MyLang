@@ -1,5 +1,6 @@
 export interface IVocabularyDTO {
 
+    id: string;
     english: string;
     german: string;
     thai: string;
@@ -13,7 +14,8 @@ export interface IVocabularyDTO {
     repetitionHistory: string;
     percentageCorrect: number;
     excludeFromLearning: number;
-    containsWords: any;
+    includeToLearning: number;
+    containsWords: number[];
     flags: any;
 
 }

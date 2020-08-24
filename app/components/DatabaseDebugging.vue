@@ -96,7 +96,9 @@
                 let vocabularyDataProvider = new VocabularyDataProvider();
                 let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
 
-                let superTopics = vocabularyDataProvider.provideSuperTopics()
+                let superTopics = vocabularyDataProvider.provideSuperTopics();
+
+
                 console.log("superTopics: ", superTopics);
             },
             selectVocabsForInput(): void {
