@@ -227,7 +227,7 @@ export class VocabularyDatabaseConnector {
                         let vocabularyDTO: IVocabularyDTO = this.createVocabularyDTO(row);
                         vocabularyDTOArray.push(vocabularyDTO);
                     });
-                    resolve(vocabularyDTOArray);
+                    resolve(vocabularyDTOArray[0]);
                 }, error => {
                     console.log("SELECT VOCABULARY BY ID ERROR: ", error);
                     reject(error);

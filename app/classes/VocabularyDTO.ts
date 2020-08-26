@@ -18,6 +18,7 @@ export class VocabularyDTO implements IVocabularyDTO {
     private _excludeFromLearning: number = 0;
     private _includeToLearning: number = 0;
     //contains array with id´s of words that occur in this word bc I´m to lazy to implement a proper db-scheme lol
+    //may be changed to string. A json-string might be better
     private _containsWords: any = "";
     private _flags: any = "";
 

@@ -1,5 +1,6 @@
 import {IVocabularyDTO} from "@/classes/IVocabularyDTO";
 import {VocabularyDatabaseConnector} from "@/classes/VocabularyDatabaseConnector";
+import {VocabularyDTO} from "@/classes/VocabularyDTO";
 
 export class VocabularyService {
 
@@ -7,6 +8,22 @@ export class VocabularyService {
 
     constructor() {
         this.vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
+    }
+
+    getVocabularyById(id: number) {
+        return this.vocabularyDatabaseConnector.selectVocabularyById(id);
+    }
+
+    //checkForNextVocabularyIntroduction
+    getNextUnIntroducedVocabularyFrom(vocabularyDTOS: IVocabularyDTO[]): IVocabularyDTO {
+
+        for (let vocabularyDTO of vocabularyDTOS) {
+            if (vocabularyDTO.excludeFromLearning === 0 && vocabularyDTO.includeToLearning === 0) {
+                return vocabularyDTO;
+            }
+        }
+        //intentional null
+        return null;
     }
 
     remarkLearning(vocabularyDTO: IVocabularyDTO): void {

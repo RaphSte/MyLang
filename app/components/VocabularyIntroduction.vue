@@ -23,16 +23,22 @@
         data() {
             return {}
         },
-        props: ['vocabulary'],
+        props: ['vocabulary', 'componentTaskCompleted'],
 
         methods: {
+            componentTaskIsFinished(){
+                this.$emit('componentTaskIsFinished', true);
+            },
             markAsNotLearn(vocabularyDTO: IVocabularyDTO): void {
                 let vocabularyService = new VocabularyService();
                 vocabularyService.remarkExcludeFromLearning(vocabularyDTO);
+                this.componentTaskIsFinished();
+
             },
             markAsLearn(vocabularyDTO: IVocabularyDTO): void {
                 let vocabularyService = new VocabularyService();
                 vocabularyService.remarkLearning(vocabularyDTO);
+                this.componentTaskIsFinished();
             },
         },
         created() {

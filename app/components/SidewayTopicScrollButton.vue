@@ -18,29 +18,12 @@
                             @tap="viewTopicOverView(topic)"
                             col="2"
                             row="0">
-
                     </Button>
                     <Label class="fa fa-info-circle" text.decode="&#xf05a;" col="2" row="0"/>
 
                 </GridLayout>
-
             </StackLayout>
         </GridLayout>
-
-
-        <!--        <GridLayout columns="*,auto" rows="*,*">-->
-        <!--            <Button class="sideways-scroll-button" :style="{'background-color':color}"-->
-        <!--                    v-bind:key="topic.id" :text="topic" @tap="viewVocabsForTopic(topic)" col="0" row="0" colSpan="2">-->
-        <!--            </Button>-->
-        <!--            <Button class="" :style="{'background-color':color}"-->
-        <!--                    v-bind:key="topic.id"  @tap="viewVocabsForTopic(topic)" col="0" row="1">-->
-        <!--            </Button>-->
-
-
-        <!--&lt;!&ndash;            <Button class="button" text="goBack" @tap="navigateBack" col="0" row="0"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <VocabularyListComponent colSpan="3" v-bind:vocabularies="vocabularies" row="1"/>&ndash;&gt;-->
-        <!--        </GridLayout>-->
-
 
     </ScrollView>
 </template>
@@ -64,17 +47,7 @@
             goToLearn(subTopic): void {
                 let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
 
-                console.log("button pressed!");
                 console.log(subTopic);
-
-                // vocabularyDatabaseConnector.selectVocabulariesFor(subTopic).then((vocabularyDTOs: IVocabularyDTO[]) => {
-                //     vocabularyDTOs.forEach((vocabularyDTO) => {
-                //         console.log("___________________________");
-                //         console.log(vocabularyDTO);
-                //         console.log("___________________________");
-                //     });
-                // });
-
 
                 this.$navigateTo(Learn, {
                     transition: {

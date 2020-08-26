@@ -81,7 +81,7 @@
                 });
             },
             getColor(rowIndex) {
-                let colors = ['#90f', '#0ff', '#f0f', '#00f'];
+                let colors = ['#90f', '#008080', '#f0f', '#00f'];
                 let duplicatedColors = [];
 
                 colors.forEach((color) => {
