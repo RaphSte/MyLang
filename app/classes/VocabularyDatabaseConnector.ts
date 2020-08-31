@@ -315,7 +315,7 @@ export class VocabularyDatabaseConnector {
     }
 
     private wrapQueryNumber(queryNumber: number) {
-        return "="+queryNumber;
+        return "=" + queryNumber;
     }
 
     greet(): string {

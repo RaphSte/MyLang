@@ -90,7 +90,7 @@
 
     .sideways-scroll-button {
         color: white;
-        width: 320px;
+        width: 350px;
         height: 220px;
         border-radius: 30px;
         opacity: 1;

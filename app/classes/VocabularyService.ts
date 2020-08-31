@@ -26,6 +26,17 @@ export class VocabularyService {
         return null;
     }
 
+    provideRandomVocabularyFromBatch(vocabularyDTOS: IVocabularyDTO[]): IVocabularyDTO {
+        return vocabularyDTOS[Math.floor(Math.random() * vocabularyDTOS.length)];
+    }
+
+    provideAnotherRandomVocabularyFromBatch(vocabularyDTOS: IVocabularyDTO[], excludedVocabulary: IVocabularyDTO): IVocabularyDTO {
+        //TODO: remove/filtering item from array doesnt seem to work
+        let newVocabularyDTOBatch: IVocabularyDTO[] = vocabularyDTOS.filter(obj => obj !== excludedVocabulary);
+        return this.provideRandomVocabularyFromBatch(newVocabularyDTOBatch);
+    }
+
+
     remarkLearning(vocabularyDTO: IVocabularyDTO): void {
         vocabularyDTO.includeToLearning = 1;
         this.vocabularyDatabaseConnector.updateVocabulary(vocabularyDTO);

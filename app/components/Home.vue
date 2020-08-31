@@ -111,7 +111,7 @@
     }
 
     Button {
-        background-color: rgba(255, 0, 0, 0.0);
+        background-color: rgba(44, 22, 61, 0.6);
     }
 
 </style>

@@ -13,7 +13,8 @@
                     v-for="component in componentsArray"
                     v-show="component === currentChildComponent"
                     v-bind:vocabulary="currentVocabulary"
-                    :componentTaskCompleted="childComponentTaskCompleted"
+                    v-bind:vocabularyDTOs="vocabularies"
+                    v-bind:componentTaskCompleted="childComponentTaskCompleted"
                     :is="component"
                     row="1"
                     col="0"
@@ -65,9 +66,9 @@
             navigateBack(): void {
                 this.$navigateBack();
             },
-            setVocabArrayFor(subTopic): void {
+            async setVocabArrayFor(subTopic) {
                 let vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
-                vocabularyDatabaseConnector.selectVocabulariesFor(subTopic).then((vocabularyDTOs: IVocabularyDTO[]) => {
+                await vocabularyDatabaseConnector.selectVocabulariesFor(subTopic).then((vocabularyDTOs: IVocabularyDTO[]) => {
                     this.vocabularies = vocabularyDTOs;
                     this.prepareNextChildComponent();
                 });
@@ -78,7 +79,7 @@
                 let nextUnIntroducedVocabulary: IVocabularyDTO = vocabularyService.getNextUnIntroducedVocabularyFrom(this.vocabularies);
 
                 //TODO: dont do anything if previous vocab was newly introduced
-                if (nextUnIntroducedVocabulary !== null){
+                if (nextUnIntroducedVocabulary !== null) {
                     this.currentVocabulary = nextUnIntroducedVocabulary;
                     this.currentChildComponent = "VocabularyIntroduction";
                 } else {
@@ -95,7 +96,7 @@
             },
             handleStateChanges(changedState): void {
                 this.childComponentTaskCompleted = changedState;
-                if(this.childComponentTaskCompleted){
+                if (this.childComponentTaskCompleted) {
                     this.childComponentTaskCompleted = false;
                     this.prepareNextChildComponent();
                 }
