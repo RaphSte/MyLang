@@ -11,54 +11,66 @@
 <script lang="ts">
     import {IVocabularyDTO} from "@/classes/IVocabularyDTO";
     import {VocabularyService} from "@/classes/VocabularyService";
+    import {VocabularyDTO} from "@/classes/VocabularyDTO";
 
     export default {
 
         name: "TrainingYesNo",
         data() {
-            return {}
+            return {
+                compareVocabularyDTO: VocabularyDTO,
+            }
         },
-        props: ['vocabulary', 'vocabularyDTOs', 'componentTaskCompleted'],
+        props: ['vocabulary', 'vocabularyDTOs', 'componentTaskCompleted', 'answerState'],
 
         methods: {
-            componentTaskIsFinished() {
+            componentTaskIsFinished(): void {
                 this.$emit('componentTaskIsFinished', true);
+            },
+            emitAnswerState(answerState: number): void {
+                this.$emit('answerState', answerState);
             },
 
             answerYes(vocabularyDTO: IVocabularyDTO): void {
-                console.log("yes has been chosen");
                 //TODO: evaluate if correct, initiate dto-update, update history, update percentage correct...
-
-
-                this.componentTaskIsFinished();
+                this.processAnswer(true);
             },
             answerNo(vocabularyDTO: IVocabularyDTO): void {
-                console.log("no has been chosen");
                 //TODO: evaluate if correct, initiate dto-update, update history, update percentage correct...
+                this.processAnswer(false);
+            },
 
+            processAnswer(answer: boolean) {
+
+                let answerCorrect: number = -1;
+                //evaluate if correct
+                if ((this.compareVocabularyDTO.id === this.$props["vocabulary"].id && answer)
+                    || (this.compareVocabularyDTO.id !== this.$props["vocabulary"].id && !answer)
+                ) {
+                    answerCorrect = 1;
+                } else {
+                    answerCorrect = 0;
+                }
+
+                this.emitAnswerState(answerCorrect);
                 this.componentTaskIsFinished();
             },
-            evaluateAnswer() {
-
-            },
             provideYesNoRenderObject(vocabularyDTO: IVocabularyDTO) {
-                //TODO: implement picture/font/50-50 chance to be correct or wrong/etc...
+                //TODO: implement picture/font/etc...
                 let vocabularyService: VocabularyService = new VocabularyService();
                 let compareVocabulary: IVocabularyDTO;
                 let extraString = "";
 
-                console.log(this.$props["vocabularyDTOs"].length, " props length, is it empty?");
-
                 if (Math.random() > 0.5 && this.$props["vocabularyDTOs"].length !== 0) {
                     compareVocabulary = vocabularyService.provideAnotherRandomVocabularyFromBatch(this.$props["vocabularyDTOs"], vocabularyDTO);
+                    this.compareVocabularyDTO = compareVocabulary;
                     console.log(compareVocabulary.german, " provided");
-                    //compareVocabulary = vocabularyDTO;
                     extraString = "(n)";
                 } else {
+                    this.compareVocabularyDTO = vocabularyDTO;
                     compareVocabulary = vocabularyDTO;
                     extraString = "(y)";
                 }
-
 
                 return vocabularyDTO.german + "\n=\n" + compareVocabulary.thai + extraString;
             }
