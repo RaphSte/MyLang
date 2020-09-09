@@ -250,7 +250,7 @@ export class VocabularyDatabaseConnector {
                     ColumnName.imageKey + this.wrapQueryString(vocabularyDTO.imageKey) + QueryElement.comma +
                     ColumnName.repetitions + this.wrapQueryNumber(vocabularyDTO.repetitions) + QueryElement.comma +
                     ColumnName.correctRepetitions + this.wrapQueryNumber(vocabularyDTO.correctRepetitions) + QueryElement.comma +
-                    ColumnName.repetitionHistory + this.wrapQueryString(vocabularyDTO.imageKey) + QueryElement.comma +
+                    ColumnName.repetitionHistory + this.wrapQueryString(vocabularyDTO.repetitionHistory) + QueryElement.comma +
                     ColumnName.percentageCorrect + this.wrapQueryNumber(vocabularyDTO.percentageCorrect) + QueryElement.comma +
                     ColumnName.excludeFromLearning + this.wrapQueryNumber(vocabularyDTO.excludeFromLearning) + QueryElement.comma +
                     ColumnName.includeToLearning + this.wrapQueryNumber(vocabularyDTO.includeToLearning) + QueryElement.comma +

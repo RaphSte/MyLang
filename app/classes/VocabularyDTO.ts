@@ -2,7 +2,7 @@ import {IVocabularyDTO} from "@/classes/IVocabularyDTO";
 
 export class VocabularyDTO implements IVocabularyDTO {
 
-    private _id: string = "defaultKey";
+    private _id: number = -1;
     private _english: string = "defaultString";
     private _german: string = "defaultString";
     private _thai: string = "defaultString";
@@ -23,11 +23,11 @@ export class VocabularyDTO implements IVocabularyDTO {
     private _flags: any = "";
 
 
-    get id(): string {
+    get id(): number {
         return this._id;
     }
 
-    set id(value: string) {
+    set id(value: number) {
         this._id = value;
     }
 

@@ -10,51 +10,7 @@ export class VocabularyService {
         this.vocabularyDatabaseConnector = new VocabularyDatabaseConnector();
     }
 
-    databaseRequestProcessing(){
-        //thats a regular string
-        let sqlQuery = "SELECT * FROM your_table_name WHERE ";
-
-        //filter, two of them are set, two are blank
-        let name = "Raphael Sterk";
-        let department = "it-department";
-        let phone = "";
-        let country = "";
-
-        let nameSnippet = this.createWhereQuerySnippet(name);
-        let departmentSnippet = this.createWhereQuerySnippet(department);
-        let phoneSnippet = this.createWhereQuerySnippet(phone);
-        let countrySnippet = this.createWhereQuerySnippet(country);
-
-        sqlQuery = sqlQuery + nameSnippet + departmentSnippet + phoneSnippet + countrySnippet;
-        //this will be:  'SELECT * FROM your_table_name WHERE name="Raphael Sterk" OR department="it-department" OR'
-
-        //remove last 3 chars from string (OR ) (last character is a space)
-        sqlQuery = sqlQuery.substring(0, sqlQuery.length - 3);
-
-        //add semicolon to complete query;
-        sqlQuery = sqlQuery+";"
-
-
-        this.myDataBaseExecuteQuery(sqlQuery);
-    }
-
-
-    //only works for string
-    createWhereQuerySnippet(filter) {
-        if (filter === "") {
-            return "";
-        } else {
-            //keep in mind that there is a space behind the 'OR'
-            return "name=\"" + filter + "\n OR ";
-        }
-    }
-
-    myDataBaseExecuteQuery(sqlQuery){
-        //code for execution
-    }
-
-
-    getVocabularyById(id: number) {
+    async getVocabularyById(id: number) {
         return this.vocabularyDatabaseConnector.selectVocabularyById(id);
     }
 
@@ -92,19 +48,27 @@ export class VocabularyService {
 
     updateVocabularyStats(vocabularyDTO: IVocabularyDTO, correctlyAnswered: boolean): void {
         //updateStuff: repetitionstuff, check if vocabulary finished learning
-
-        if(correctlyAnswered){
+        vocabularyDTO.repetitions++;
+        if (correctlyAnswered) {
             vocabularyDTO.correctRepetitions++;
-
-        }else{
-
-            vocabularyDTO.correctRepetitions = 0;
         }
-
-
-
+        let percentageCorrect = vocabularyDTO.correctRepetitions / vocabularyDTO.repetitions;
+        if (typeof percentageCorrect !== "number" || !isFinite(percentageCorrect)) {
+            vocabularyDTO.percentageCorrect = 0;
+        } else {
+            vocabularyDTO.percentageCorrect = percentageCorrect;
+        }
+        let repetitionHistoryString = vocabularyDTO.repetitionHistory;
+        if (repetitionHistoryString === 'defaultString') {
+            repetitionHistoryString = "";
+            console.log("resetting repetition history");
+        }
+        let repetitionHistoryArray = repetitionHistoryString.split(",",9);
+        repetitionHistoryArray.unshift(String(correctlyAnswered));
+        vocabularyDTO.repetitionHistory = repetitionHistoryArray.toString();
 
         this.vocabularyDatabaseConnector.updateVocabulary(vocabularyDTO);
+        console.log("upadte vocabularyDTO in db:  ", vocabularyDTO);
     }
 
 

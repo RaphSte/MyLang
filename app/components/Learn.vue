@@ -109,13 +109,22 @@
                     //TODO: handle multiple child components
                     //TODO: yadaayadaa this is the place where ne next unlearned vocab needs to be provided. For now a random element from the array is provided.
                     let randomVocab: IVocabularyDTO = this.vocabularies[Math.floor(Math.random() * this.vocabularies.length)];
+
+
+                    //do i need this?
+                    // vocabularyService.getVocabularyById(randomVocab.id).then((vocabularyDTO: IVocabularyDTO) => {
+                    //     this.currentVocabulary = vocabularyDTO;
+                    //     this.currentChildComponent = "TrainingYesNo";
+                    // });
                     this.currentVocabulary = randomVocab;
                     this.currentChildComponent = "TrainingYesNo";
+
                 }
 
 
             },
             handleStateChanges(changedState): void {
+                console.log("handleStateChanges");
                 this.childComponentTaskCompleted = changedState;
                 if (this.childComponentTaskCompleted) {
                     this.childComponentTaskCompleted = false;
@@ -123,7 +132,13 @@
                 }
             },
             showEvaluationPopover(childAnswerState): void {
+                console.log("showPopover!");
 
+                let vocabularyService: VocabularyService = new VocabularyService();
+                let answerCorrect = childAnswerState === 1;
+
+
+                vocabularyService.updateVocabularyStats(this.currentVocabulary, answerCorrect);
 
                 this.$navigateTo(AnswerEvaluationScreen, {
                     transition: {
@@ -134,12 +149,10 @@
                     transitionAndroid: {},
 
                     props: {
-                        answerCorrect: childAnswerState === 1,
+                        answerCorrect: answerCorrect,
                         vocabulary: this.currentVocabulary,
-
                     }
                 });
-
 
 
                 // console.log('childAnswerState: ', childAnswerState);

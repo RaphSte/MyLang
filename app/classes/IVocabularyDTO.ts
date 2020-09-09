@@ -1,6 +1,6 @@
 export interface IVocabularyDTO {
 
-    id: string;
+    id: number;
     english: string;
     german: string;
     thai: string;

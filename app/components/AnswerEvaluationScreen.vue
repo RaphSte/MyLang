@@ -4,14 +4,14 @@
 
         <GridLayout rows="*">
             <DockLayout stretchLastChild="true">
-                <Button  @tap="goBack()" class="background-button" text="right" dock="bottom"/>
+                <Button @tap="goBack()" class="background-button" text="right" dock="bottom"/>
             </DockLayout>
             <GridLayout>
                 <Label :class="overlayClassesCorrectAnswer('Learn')" text.decode="&#xf00c;"/>
                 <Label :class="overlayClassesWrongAnswer('Learn')" text.decode="&#xf00d;"/>
 
-<!--                TODO: dynamic rendering of fa-->
-<!--                <Label  :class="applyMatchingStyle('Learn')" text.decode="'&#xf00c;'"/>-->
+                <!--                TODO: dynamic rendering of fa-->
+                <!--                <Label  :class="applyMatchingStyle('Learn')" text.decode="'&#xf00c;'"/>-->
             </GridLayout>
         </GridLayout>
     </Page>
@@ -23,12 +23,16 @@
                 childAnswerState: -1,
                 success: '&#xf00c;',
                 fail: '&#xf00d;',
+                backEnabled: true,
             }
         },
         props: ['answerCorrect', 'vocabulary'],
         methods: {
             goBack(): void {
-                this.$navigateBack();
+                if (this.backEnabled) {
+                    this.$navigateBack();
+                }
+                this.backEnabled = false;
             },
             displayAnswerResult() {
                 if (this.$props['answerCorrect']) {
@@ -38,10 +42,11 @@
                 }
             },
             initVue(): void {
+                this.backEnabled = true;
                 this.displayAnswerResult()
                 setTimeout(() => {
                     this.goBack()
-                }, 13500);
+                }, 3500);
             },
         },
         computed: {
