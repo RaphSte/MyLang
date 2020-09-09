@@ -90,4 +90,22 @@ export class VocabularyService {
         this.vocabularyDatabaseConnector.updateVocabulary(vocabularyDTO);
     }
 
+    updateVocabularyStats(vocabularyDTO: IVocabularyDTO, correctlyAnswered: boolean): void {
+        //updateStuff: repetitionstuff, check if vocabulary finished learning
+
+        if(correctlyAnswered){
+            vocabularyDTO.correctRepetitions++;
+
+        }else{
+
+            vocabularyDTO.correctRepetitions = 0;
+        }
+
+
+
+
+        this.vocabularyDatabaseConnector.updateVocabulary(vocabularyDTO);
+    }
+
+
 }

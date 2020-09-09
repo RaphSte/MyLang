@@ -12,7 +12,6 @@
 
 
                 <component
-                        :class="hideOnOverlay('Learn')"
                         v-for="component in componentsArray"
                         v-show="component === currentChildComponent"
                         v-bind:vocabulary="currentVocabulary"
@@ -28,24 +27,20 @@
                 />
             </GridLayout>
 
-            <AbsoluteLayout class="dialog-wrapper">
+            <!--            <AbsoluteLayout class="dialog-wrapper">-->
 
 
-                <GridLayout>
-                    <!--                    <Button class="correct-answer dialog-button fa" text.decode="&#xf00c;"></Button>-->
-                    <!--                    <Button class="wrong-answer dialog-button fa" text.decode="&#xf00d;"></Button>-->
-                    <Button :class="overlayClassesCorrectAnswer('Learn')" text.decode="&#xf00c;"
-                            @tap="childAnswerState = -1"/>
-                    <Button :class="overlayClassesWrongAnswer('Learn')" text.decode="&#xf00d;"
-                            @tap="childAnswerState = -1"/>
-                </GridLayout>
+            <!--                <GridLayout>-->
+            <!--                    &lt;!&ndash;                    <Button class="correct-answer dialog-button fa" text.decode="&#xf00c;"></Button>&ndash;&gt;-->
+            <!--                    &lt;!&ndash;                    <Button class="wrong-answer dialog-button fa" text.decode="&#xf00d;"></Button>&ndash;&gt;-->
+            <!--                    <Button :class="overlayClassesCorrectAnswer('Learn')" text.decode="&#xf00c;"-->
+            <!--                            @tap="childAnswerState = -1"/>-->
+            <!--                    <Button :class="overlayClassesWrongAnswer('Learn')" text.decode="&#xf00d;"-->
+            <!--                            @tap="childAnswerState = -1"/>-->
+            <!--                </GridLayout>-->
 
-                <!--                <StackLayout>-->
-                <!--                    <Label textWarp="true" text="FrageBeantwortet!!"/>-->
-                <!--                    <Label textWarp="true" :text="childAnswerState"/>-->
-                <!--                </StackLayout>-->
 
-            </AbsoluteLayout>
+            <!--            </AbsoluteLayout>-->
 
         </GridLayout>
     </Page>
@@ -53,6 +48,7 @@
 </template>
 <script lang="ts">
 
+    import AnswerEvaluationScreen from "@/components/AnswerEvaluationScreen.vue";
     import VocabularyListComponent from "@/components/VocabularyListComponent.vue";
     import {VocabularyDatabaseConnector} from "@/classes/VocabularyDatabaseConnector";
     import {IVocabularyDTO} from "@/classes/IVocabularyDTO";
@@ -64,6 +60,7 @@
     import Settings from "@/components/Settings.vue";
     import TrainingYesNo from "@/components/TrainingYesNo.vue";
     import {VocabularyService} from "@/classes/VocabularyService";
+    import AnotherPage from "@/components/AnotherPage.vue";
 
     export default {
         components: {
@@ -127,14 +124,31 @@
             },
             showEvaluationPopover(childAnswerState): void {
 
-                console.log('childAnswerState: ', childAnswerState);
-                this.childAnswerState = childAnswerState;
-                this.$forceUpdate();
-                console.log("forced update");
-                setTimeout(function () {
-                    // this.resetChildAnswerState();
-                    //this.$childAnswerState = -1;
-                }, 2000);
+
+                this.$navigateTo(AnswerEvaluationScreen, {
+                    transition: {
+                        name: 'scaleUp',
+                        duration: 300
+                    },
+                    transitioniOS: {},
+                    transitionAndroid: {},
+
+                    props: {
+                        answerCorrect: childAnswerState === 1,
+                        vocabulary: this.currentVocabulary,
+
+                    }
+                });
+
+
+
+                // console.log('childAnswerState: ', childAnswerState);
+                // this.childAnswerState = childAnswerState;
+                // this.$forceUpdate();
+                // console.log("forced update");
+                // setTimeout(() => {
+                //     this.childAnswerState = -1;
+                // }, 3500);
             },
             resetChildAnswerState(): void {
                 this.childAnswerState = -1;
@@ -157,31 +171,6 @@
                 this.setVocabArrayFor(this.subTopic);
             },
         },
-        computed: {
-            overlayClassesCorrectAnswer() {
-                return component => ({
-                    "fa": true,
-                    "dialog-button": true,
-                    "correct-answer": true,
-                    "hidden": this.childAnswerState !== 1,
-                });
-            },
-            overlayClassesWrongAnswer() {
-                return component => ({
-                    "fa": true,
-                    "dialog-button": true,
-                    "wrong-answer": true,
-                    "hidden": this.childAnswerState !== 0,
-                });
-            },
-            hideOnOverlay() {
-                return component => ({
-                    "hidden": this.childAnswerState !== -1,
-                });
-            },
-
-
-        },
     }
 </script>
 
@@ -193,7 +182,7 @@
     }
 
     .dialog-button {
-        background-color: pink;
+        background-color: white;
         font-size: 80;
         border-radius: 80;
         width: 180;
@@ -202,6 +191,16 @@
         z-index: 0;
     }
 
+    .background-button {
+        background-color: pink;
+        opacity: 0.5;
+        width: 1010;
+        height: 100;
+        border: 0;
+        z-index: -1;
+        padding: 0;
+        margin: 0;
+    }
 
     .correct-answer {
         color: forestgreen;
@@ -215,5 +214,6 @@
         opacity: 0;
         height: 1;
     }
+
 
 </style>
