@@ -1,11 +1,13 @@
 <template>
-    <Page @loaded="initVue" class="page">
+    <Page @loaded="initVue" class="page" actionBarHidden="true">
         <GridLayout>
 
-            <GridLayout columns="*,*,*,*" rows="auto,*,auto" orientation="horizontal">
-                <Button class="button" text="goBack" @tap="navigateBack" col="0" row="0"/>
-                <Label text="Learn!" col="1" row="0"/>
-                <Label text=":time left: XX:XX" col="4" row="0"/>
+            <GridLayout columns="auto,*,auto" rows="auto,auto,*,auto" orientation="horizontal">
+                <Button class="fa back-button navbar-component" text.decode="&#xf053; Back" @tap="navigateBack" col="0"
+                        row="0"/>
+                <Label class="navbar-component tpoic-display" :text="'Learning about:'" col="1" row="0"/>
+                <Label class="fa navbar-component time-display" :text.decode="timeDisplay+' \uf252'" col="4" row="0"/>
+                <Label class="navbar-component tpoic-display" :text="subTopic" col="0" row="1" colSpan="3"/>
 
                 <!--            <VocabularyIntroduction colSpan="4" v-bind:vocabulary="currentVocabulary" row="1"/>-->
                 <!--            &lt;!&ndash;            <VocabularyListComponent colSpan="4" v-bind:vocabularies="vocabularies" row="1"/>&ndash;&gt;-->
@@ -19,9 +21,9 @@
                         v-bind:componentTaskCompleted="childComponentTaskCompleted"
                         v-bind:answerState="childAnswerState"
                         :is="component"
-                        row="1"
+                        row="2"
                         col="0"
-                        colSpan="4"
+                        colSpan="3"
                         @componentTaskIsFinished="handleStateChanges($event)"
                         @answerState="showEvaluationPopover($event)"
                 />
@@ -79,6 +81,9 @@
                 subTopic: "",
                 currentVocabulary: "",
                 vocabularyIntroductionIsFinished: false,
+                timerCount: 0,
+                timerLockActive: false,
+                timeDisplay: "00:00",
             }
         },
 
@@ -180,14 +185,40 @@
             },
 
             initVue(): void {
+                //TODO set timer properly (use key value storage)
+                this.timerCount = 300;
+
                 this.subTopic = this.$props["subTopicProp"];
                 this.setVocabArrayFor(this.subTopic);
             },
+        },
+        watch: {
+            timerCount: {
+                handler(value) {
+                    if (value > 0 && !this.timerLockActive) {
+                        this.timerLockActive = true;
+                        setTimeout(() => {
+                            this.timerCount--;
+                            this.timeDisplay = new Date(this.timerCount * 1000).toISOString().substr(14, 5);
+                            this.timerLockActive = false;
+                        }, 1000);
+                    }
+                },
+                immediate: true // This ensures the watcher is triggered upon creation
+            }
         },
     }
 </script>
 
 <style scoped>
+
+    .tpoic-display {
+        text-align: center;
+    }
+
+    .time-display {
+        margin-right: 10;
+    }
 
 
     .dialog-wrapper {

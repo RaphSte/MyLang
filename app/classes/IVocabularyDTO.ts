@@ -15,7 +15,7 @@ export interface IVocabularyDTO {
     percentageCorrect: number;
     excludeFromLearning: number;
     includeToLearning: number;
-    containsWords: number[];
-    flags: any;
+    containsWords: string;
+    flags: string;
 
 }

@@ -1,7 +1,8 @@
 <template>
-    <Page @loaded="initVue" class="page">
+    <Page @loaded="initVue" class="page" actionBarHidden="true">
         <GridLayout columns="*,*,*" rows="auto,*,auto" orientation="horizontal">
-            <Button class="button" text="goBack" @tap="navigateBack" col="0" row="0"/>
+<!--            <Button class="button" text="goBack" @tap="navigateBack" col="0" row="0"/>-->
+            <Button class="fa back-button navbar-component" text.decode="&#xf053; Back" @tap="navigateBack" col="0" row="0"/>
             <Label text="TopicOver.vue" col="1" row="0" colSpan="2"/>
             <VocabularyListComponent colSpan="3" v-bind:vocabularies="vocabularies" row="1"/>
         </GridLayout>

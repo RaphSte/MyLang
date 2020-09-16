@@ -54,8 +54,8 @@ export class VocabularyDatabaseConnector {
                     ColumnName.percentageCorrect + QueryElement.numeric + QueryElement.comma +
                     ColumnName.excludeFromLearning + QueryElement.integer + QueryElement.comma +
                     ColumnName.includeToLearning + QueryElement.integer + QueryElement.comma +
-                    ColumnName.containsWords + QueryElement.blob + QueryElement.comma +
-                    ColumnName.flags + QueryElement.blob +
+                    ColumnName.containsWords + QueryElement.text + QueryElement.comma +
+                    ColumnName.flags + QueryElement.text +
                     ")").then(id => {
                     resolve(db);
                 }, error => {
@@ -254,8 +254,8 @@ export class VocabularyDatabaseConnector {
                     ColumnName.percentageCorrect + this.wrapQueryNumber(vocabularyDTO.percentageCorrect) + QueryElement.comma +
                     ColumnName.excludeFromLearning + this.wrapQueryNumber(vocabularyDTO.excludeFromLearning) + QueryElement.comma +
                     ColumnName.includeToLearning + this.wrapQueryNumber(vocabularyDTO.includeToLearning) + QueryElement.comma +
-                    ColumnName.containsWords + this.wrapQueryString(vocabularyDTO.containsWords.toString()) + QueryElement.comma +
-                    ColumnName.flags + this.wrapQueryString(vocabularyDTO.flags.toString()) +
+                    ColumnName.containsWords + this.wrapQueryString(vocabularyDTO.containsWords) + QueryElement.comma +
+                    ColumnName.flags + this.wrapQueryString(vocabularyDTO.flags) +
                     "WHERE " + ColumnName.id + "='" + vocabularyDTO.id + "'").then(id => {
 
                     resolve(db);

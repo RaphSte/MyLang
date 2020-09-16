@@ -19,8 +19,8 @@ export class VocabularyDTO implements IVocabularyDTO {
     private _includeToLearning: number = 0;
     //contains array with id´s of words that occur in this word bc I´m to lazy to implement a proper db-scheme lol
     //may be changed to string. A json-string might be better
-    private _containsWords: any = "";
-    private _flags: any = "";
+    private _containsWords: string = "defaultString";
+    private _flags: string = "defaultString";
 
 
     get id(): number {
@@ -143,11 +143,11 @@ export class VocabularyDTO implements IVocabularyDTO {
         this._includeToLearning = value;
     }
 
-    get containsWords(): number[] {
+    get containsWords(): string {
         return this._containsWords;
     }
 
-    set containsWords(value: number[]) {
+    set containsWords(value: string) {
         this._containsWords = value;
     }
 

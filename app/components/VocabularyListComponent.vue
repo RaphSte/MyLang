@@ -13,9 +13,10 @@
                         <Label col="0" row="1" class="white" text="flags: "/>
                         <Label col="1" row="1" class="white" :text="'not learning: '+vocabulary.excludeFromLearning"/>
                         <Label col="4" row="1" class="white" :text="'learning: '+vocabulary.includeToLearning"/>
-                        <Label col="1" row="2" colSpan="2" class="white" :text="'repetitions: '+vocabulary.repetitions"/>
-                        <Label col="3" row="2" colSpan="2" class="white" :text="'correctRepetitions: '+vocabulary.correctRepetitions"/>
-                        <Label col="5" row="2" colSpan="2" class="white" :text="'%: '+vocabulary.percentageCorrect"/>
+                        <Label col="0" row="2" class="white" text="repetition stats: "/>
+                        <Label col="1" row="2" class="white" :text="'repetitions: '+vocabulary.repetitions"/>
+                        <Label col="2" row="2" colSpan="2" class="white" :text="'correctRepetitions: '+vocabulary.correctRepetitions"/>
+                        <Label col="4" row="2" colSpan="2" class="white" :text="'%: '+vocabulary.percentageCorrect"/>
                         <Label col="0" row="3" colSpan="10"  class="white" :text="'repetition history: '+vocabulary.repetitionHistory"/>
                     </GridLayout>
                 </ScrollView>

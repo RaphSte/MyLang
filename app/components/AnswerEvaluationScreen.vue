@@ -1,7 +1,5 @@
 <template>
-    <Page @loaded="initVue" class="page">
-
-
+    <Page @loaded="initVue" class="page" actionBarHidden="true">
         <GridLayout rows="*">
             <DockLayout stretchLastChild="true">
                 <Button @tap="goBack()" class="background-button" text="right" dock="bottom"/>
@@ -46,7 +44,7 @@
                 this.displayAnswerResult()
                 setTimeout(() => {
                     this.goBack()
-                }, 3500);
+                }, 2500);
             },
         },
         computed: {

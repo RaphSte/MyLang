@@ -95,7 +95,7 @@
         created() {
             this.getVocabularies();
             this.setTopicArray();
-            console.log("created");
+            console.log("topics created");
         }
 
     }
