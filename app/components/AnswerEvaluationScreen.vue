@@ -15,6 +15,8 @@
     </Page>
 </template>
 <script lang="ts">
+    import { Sound } from 'nativescript-forgm-sound';
+
     export default {
         data() {
             return {
@@ -42,6 +44,12 @@
             initVue(): void {
                 this.backEnabled = true;
                 this.displayAnswerResult()
+                console.log("create sound");
+                const horse: Sound = new Sound('~/assets/sounds/horse.mp3');
+                setTimeout(() => {
+                    horse.play();
+                    //TODO find a way to dynamically download & save sounds (google translate api?) maybe using this: https://market.nativescript.org/plugins/nativescript-downloader/
+                }, 350);
                 setTimeout(() => {
                     this.goBack()
                 }, 2500);
