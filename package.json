@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@nativescript/theme": "^2.2.1",
-    "@vue/devtools": "^5.3.3",
+    "@vue/devtools": "^6.4.5",
     "font-awesome": "^4.7.0",
     "nativescript-forgm-sound": "^1.1.1",
     "nativescript-socketio": "^3.3.1",
